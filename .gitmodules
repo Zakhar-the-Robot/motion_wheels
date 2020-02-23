@@ -1,0 +1,9 @@
+[submodule ".\\software\\lib\\RotSensor"]
+	path = .\\software\\lib\\RotSensor
+	url = git@github.com:an-dr/RotSensor.git
+[submodule ".\\software\\lib\\ControlCallbacks"]
+	path = .\\software\\lib\\ControlCallbacks
+	url = git@github.com:an-dr/ControlCallbacks.git
+[submodule ".\\software\\lib\\hw_motors"]
+	path = .\\software\\lib\\hw_motors
+	url = git@github.com:an-dr/hw_motors.git
