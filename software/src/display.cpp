@@ -12,7 +12,11 @@ void display_init(void) {
     display.display();
     delay(500);
     display.clearDisplay();
+    printf("[Display] Ready!\n");
 }
+
+
+
 
 void display_print(int l, int r) {
     display.clearDisplay();

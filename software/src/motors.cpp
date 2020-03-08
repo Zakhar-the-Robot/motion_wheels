@@ -27,12 +27,15 @@ Motors_dc2platform wheels(PINR1, PINR2, PINL1, PINL2);
 ControlCallbacks Cc(connection, SIZE_ARR(connection));
 
 void motors_greeting(void) {
+    printf("[Motors] Ready!\n");
+
     wheels.MoveBackward();
     delay(300);
 
     wheels.MoveForward();
     delay(300);
     wheels.Stop();
+
 }
 
 void W(void) {

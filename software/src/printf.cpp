@@ -18,4 +18,5 @@ int putChar(char c, FILE *fp) {
 void printf_init(void)
 {
     fdevopen(putChar, getChar);
+    printf("[printf] Ready!\n");
 }
