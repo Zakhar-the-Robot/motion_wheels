@@ -13,17 +13,6 @@
 #pragma once
 
 #include <Arduino.h>
-#include "controlcallback.h"
-#include "hw_motors.h"
 
-#define PINR1 9
-#define PINR2 10
-#define PINL1 11
-#define PINL2 12
-
-void motors_greeting(void);
-void W(void);
-void A(void);
-void S(void);
-void D(void);
-void Stop(void);
+void serial_poll(void);
+void serial_init(void);

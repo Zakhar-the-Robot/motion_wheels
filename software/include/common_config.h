@@ -12,18 +12,14 @@
 
 #pragma once
 
-#include <Arduino.h>
-#include "controlcallback.h"
-#include "hw_motors.h"
+#define SERIAL_BAUDRATE 9600
+#define DISPLAY_I2C_ADDRESS 0x3C
+#define MOTORS_STEP_TIMEOUT_MS 30
 
-#define PINR1 9
-#define PINR2 10
-#define PINL1 11
-#define PINL2 12
+#define CMD_FORWARD 119
+#define CMD_BACKWARD 115
+#define CMD_LEFT 97
+#define CMD_RIGHT 100
+#define CMD_STOP 32
 
-void motors_greeting(void);
-void W(void);
-void A(void);
-void S(void);
-void D(void);
-void Stop(void);
+#define PLATFORM_I2C_ADDRESS 0x2a

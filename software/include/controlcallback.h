@@ -10,20 +10,10 @@
 //
 // *************************************************************************
 
-#pragma once
+#include "ControlCallbacks.h"
 
-#include <Arduino.h>
-#include "controlcallback.h"
-#include "hw_motors.h"
+#define SIZE_ARR(x) (sizeof(x) / sizeof(x[0]))
 
-#define PINR1 9
-#define PINR2 10
-#define PINL1 11
-#define PINL2 12
-
-void motors_greeting(void);
-void W(void);
-void A(void);
-void S(void);
-void D(void);
-void Stop(void);
+extern ControlCallbacks Cc;
+void exec_cmd(int *cmd);
+extern int cmd;
