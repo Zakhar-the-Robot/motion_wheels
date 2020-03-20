@@ -28,9 +28,10 @@ static Connection_t connection[5] = {
 
 ControlCallbacks Cc(connection, SIZE_ARR(connection));
 
-void exec_cmd(int *cmd) {
-    if (*cmd != NO_CMD) {
-        Cc.Exec(*cmd);
-        *cmd = NO_CMD;
+void control_poll() {
+    if (cmd != NO_CMD) {
+        Cc.Exec(cmd);
+        cmd = NO_CMD;
     }
 }
+

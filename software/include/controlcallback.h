@@ -14,6 +14,6 @@
 
 #define SIZE_ARR(x) (sizeof(x) / sizeof(x[0]))
 
-extern ControlCallbacks Cc;
-void exec_cmd(int *cmd);
 extern int cmd;
+extern ControlCallbacks Cc;
+void control_poll();

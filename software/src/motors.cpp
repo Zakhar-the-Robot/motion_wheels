@@ -34,23 +34,31 @@ void motors_greeting(void) {
 
 void W(void) {
     wheels.MoveForward();
+#if MOTORS_STEP_MODE
     delay(MOTORS_STEP_TIMEOUT_MS);
     wheels.Stop();
+#endif
 }
 void S(void) {
     wheels.MoveBackward();
+#if MOTORS_STEP_MODE
     delay(MOTORS_STEP_TIMEOUT_MS);
     wheels.Stop();
+#endif
 }
 void A(void) {
     wheels.MoveLeft();
+#if MOTORS_STEP_MODE
     delay(MOTORS_STEP_TIMEOUT_MS);
     wheels.Stop();
+#endif
 }
 void D(void) {
     wheels.MoveRight();
+#if MOTORS_STEP_MODE
     delay(MOTORS_STEP_TIMEOUT_MS);
     wheels.Stop();
+#endif
 }
 void Stop(void) {
     wheels.Stop();

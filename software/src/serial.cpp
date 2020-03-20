@@ -23,10 +23,8 @@ void serial_poll(void)
         cmd = Serial.read();
 
         // say what you got:
-        Serial.print("[UART] I received: ");
-        Serial.println(cmd, DEC);
+        printf("[UART] I received: %d\n", cmd);
 
-        exec_cmd(&cmd);
     }
 }
 
