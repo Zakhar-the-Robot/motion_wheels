@@ -7,3 +7,6 @@
 [submodule "software/lib/RotSensor"]
 	path = software/lib/RotSensor
 	url = git@github.com:an-dr/RotSensor.git
+[submodule "software/lib/arduino_i2c_with_regs"]
+	path = software/lib/arduino_i2c_with_regs
+	url = git@github.com:an-dr/arduino_i2c_with_regs.git

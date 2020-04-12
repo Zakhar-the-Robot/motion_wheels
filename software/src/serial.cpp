@@ -13,17 +13,17 @@
 #include "serial.h"
 #include "common_config.h"
 #include "controlcallback.h"
+#include "i2c.h"
 
-extern int cmd;
 
 void serial_poll(void)
 {
     if (Serial.available() > 0) {
-        // read the incoming byte:
-        cmd = Serial.read();
+        // read the incoming byte to i2c's command reg:
+        i2c.Set(REG_CMD, Serial.read());
 
         // say what you got:
-        printf("[UART] I received: %d\n", cmd);
+        printf("[UART] I received: %d\n", i2c.Get(REG_CMD));
 
     }
 }

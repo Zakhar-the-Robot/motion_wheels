@@ -13,25 +13,25 @@
 #include "controlcallback.h"
 #include "common_config.h"
 #include "motors.h"
+#include "i2c.h"
 
-#define NO_CMD (-1)
 
-int cmd;
-
-static Connection_t connection[5] = {
+static Connection_t connection[6] = {
     {.cmd_code = CMD_FORWARD, .func = W},
     {.cmd_code = CMD_BACKWARD, .func = S},
     {.cmd_code = CMD_LEFT, .func = A},
     {.cmd_code = CMD_RIGHT, .func = D},
     {.cmd_code = CMD_STOP, .func = Stop},
+    {.cmd_code = CMD_STOP_KB, .func = Stop}
 };
 
 ControlCallbacks Cc(connection, SIZE_ARR(connection));
 
 void control_poll() {
-    if (cmd != NO_CMD) {
-        Cc.Exec(cmd);
-        cmd = NO_CMD;
+    int new_cmd = i2c.Get(REG_CMD);
+    if ((new_cmd != CMD_NONE&0xFF) & (new_cmd != CMD_DONE)) {
+        i2c.Set(REG_MODE, new_cmd); // exec the cmd
+        Cc.Exec(new_cmd);
+        i2c.Set(REG_CMD, CMD_DONE); // set that is done
     }
 }
-

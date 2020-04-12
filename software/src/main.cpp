@@ -1,4 +1,3 @@
-#include "display.h"
 #include "motors.h"
 #include "printf.h"
 #include "serial.h"
@@ -23,17 +22,14 @@ void setup() {
 #endif
     serial_init();
 
-    // i2c_init();
-    // display_init();
+    i2c.Init(PLATFORM_I2C_ADDRESS, 4, (void *)i2c_reqEv, (void *)i2c_rcvEv);
     rotsensors_init();
     motors_greeting();
-    Wire.begin(0x2a);                // join i2c bus with address #8
-    Wire.onReceive(receiveEvent); // register event
 };
 
 
 void loop() {
-    // display_poll();
     serial_poll();
     control_poll();
+    i2c.Print();
 }
