@@ -27,3 +27,4 @@ void A(void);
 void S(void);
 void D(void);
 void Stop(void);
+void Shiver(void);

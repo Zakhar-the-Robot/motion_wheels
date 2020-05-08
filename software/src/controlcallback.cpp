@@ -16,11 +16,12 @@
 #include "i2c.h"
 
 
-static Connection_t connection[6] = {
+static Connection_t connection[7] = {
     {.cmd_code = CMD_FORWARD, .func = W},
     {.cmd_code = CMD_BACKWARD, .func = S},
     {.cmd_code = CMD_LEFT, .func = A},
     {.cmd_code = CMD_RIGHT, .func = D},
+    {.cmd_code = CMD_SHIVER, .func = Shiver},
     {.cmd_code = CMD_STOP, .func = Stop},
     {.cmd_code = CMD_STOP_KB, .func = Stop}
 };

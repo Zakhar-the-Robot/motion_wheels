@@ -60,6 +60,17 @@ void D(void) {
     wheels.Stop();
 #endif
 }
+void Shiver(void) {
+    for (size_t i = 0; i < CONFIG_SHIVERS; i++)
+    {
+        wheels.MoveRight();
+        delay(CONFIG_SHIVER_PERIOD_MS/2);
+        wheels.MoveLeft();
+        delay(CONFIG_SHIVER_PERIOD_MS/2);
+    }
+    Stop();
+}
+
 void Stop(void) {
     wheels.Stop();
 }
