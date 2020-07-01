@@ -1,3 +1,21 @@
 {
-    "C_Cpp.dimInactiveRegions": true
+  "C_Cpp.clang_format_style": "Visual Studio",
+  "editor.formatOnSave": false,
+  "[cpp]": {
+    "editor.quickSuggestions": true
+  },
+  "[c]": {
+    "editor.quickSuggestions": true
+  },
+  "C_Cpp.intelliSenseEngineFallback": "Enabled",
+  "files.associations": {
+    "*.html": "html",
+    "*.inc": "innopascal",
+    "*.log": "log",
+    "*.rst": "restructuredtext",
+    "esp_system.h": "c",
+    "task.h": "c",
+    "motors.h": "c",
+    "esp_err.h": "c"
+  }
 }

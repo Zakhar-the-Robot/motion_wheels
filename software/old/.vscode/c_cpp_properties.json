@@ -1,0 +1,83 @@
+{
+    "configurations": [
+        {
+            "name": "!!! WARNING !!! AUTO-GENERATED FILE, PLEASE DO NOT MODIFY IT AND USE https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/include",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/src",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/RotSensor/include",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/RotSensor/src",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/hw_motors/include",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/hw_motors/src",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/arduino_i2c_with_regs",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/ControlCallbacks/include",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/ControlCallbacks/src",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit SSD1306_ID135",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit ILI9341_ID571",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit GFX Library_ID13",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit TouchScreen_ID5430",
+                "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit STMPE610_ID377",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
+                "C:/Users/dongr/.platformio/lib/FreeRTOS_ID507/src",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "C:/Users/dongr/.platformio/packages/tool-unity",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/include",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/src",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/RotSensor/include",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/RotSensor/src",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/hw_motors/include",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/hw_motors/src",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/arduino_i2c_with_regs",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/ControlCallbacks/include",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/lib/ControlCallbacks/src",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit SSD1306_ID135",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit ILI9341_ID571",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit GFX Library_ID13",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit TouchScreen_ID5430",
+                    "C:/Users/dongr/Code/Zakhar/zakhar_platform/software/.pio/libdeps/Zakhar/Adafruit STMPE610_ID377",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
+                    "C:/Users/dongr/.platformio/lib/FreeRTOS_ID507/src",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "C:/Users/dongr/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "C:/Users/dongr/.platformio/packages/tool-unity",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=40303",
+                "ARDUINO_AVR_NANO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "intelliSenseMode": "clang-x64",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/dongr/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
