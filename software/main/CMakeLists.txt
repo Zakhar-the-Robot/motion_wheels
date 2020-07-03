@@ -1,7 +1,7 @@
 
-set(srcs    "main.c"
-            "src/motors.c"
-            "../lib/hw_motors/include")
+set(srcs
+            "main.cpp"
+            )
 
 set(includes    "."
                 "include")

@@ -10,3 +10,9 @@
 [submodule "software/lib/arduino_i2c_with_regs"]
 	path = software/lib/arduino_i2c_with_regs
 	url = git@github.com:an-dr/arduino_i2c_with_regs.git
+[submodule "software/components/esp32-MPU-driver"]
+	path = software/components/esp32-MPU-driver
+	url = https://github.com/natanaeljr/esp32-MPU-driver.git
+[submodule "software/components/I2Cbus"]
+	path = software/components/I2Cbus
+	url = https://github.com/natanaeljr/esp32-I2Cbus.git
