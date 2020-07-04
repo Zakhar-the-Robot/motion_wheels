@@ -1,8 +1,31 @@
+# Sources
+file(GLOB_RECURSE srcs_c "*.c")
+list(APPEND srcs  ${srcs_c})
 
-set(srcs
-            "main.cpp"
-            )
+file(GLOB_RECURSE srcs_cpp "*.cpp")
+list(APPEND srcs  ${srcs_cpp})
 
+
+# Includes
 set(includes    "."
                 "include")
+
+
+#  Print
+#  *********************************************************************
+message("*******************************************************************************")
+message("Project's info")
+
+message("-- Sources")
+foreach(el IN LISTS srcs)
+message(" ${el}")
+endforeach()
+
+message("-- Includes")
+foreach(el IN LISTS includes)
+message(" ${el}")
+endforeach()
+message("*******************************************************************************")
+# ********************************************************************** Print
+
 idf_component_register(SRCS ${srcs} INCLUDE_DIRS ${includes})
