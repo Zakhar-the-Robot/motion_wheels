@@ -17,7 +17,19 @@
     "task.h": "c",
     "motors.h": "c",
     "esp_err.h": "c",
-    "xmemory": "cpp"
+    "xmemory": "cpp",
+    "optional": "cpp",
+    "istream": "cpp",
+    "ostream": "cpp",
+    "ratio": "cpp",
+    "system_error": "cpp",
+    "array": "cpp",
+    "functional": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "xlocmon": "cpp",
+    "xtr1common": "cpp"
   },
   "idf.portWin": "COM14"
 }

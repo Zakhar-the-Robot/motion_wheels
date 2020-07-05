@@ -17,6 +17,7 @@
 #include "sdkconfig.h"
 
 #include "zk_i2c.h"
+#include "motors.h"
 #include "position_unit.h"
 
 static const char* TAG = "Main task";
@@ -27,7 +28,18 @@ extern "C" void app_main() {
     ESP_LOGI(TAG, "Start!");
 
     i2c_master_init(GPIO_NUM_22, GPIO_NUM_23, 100000);
-    mpu_init();
+    // mpu_init();
+
+    bool state = false;
+    gpio_num_t pin = GPIO_NUM_32;
+    init_write_pin(pin);
+    while (1){
+        // set_pin(GPIO_NUM_32, state);
+        gpio_set_level(pin, state);
+        ESP_LOGI(TAG, "Pin no.%d set to: %d", pin, state);
+        vTaskDelay(1000 / portTICK_RATE_MS);
+        state = !state;
+    }
     ESP_LOGI(TAG, "Init done");
 
 }

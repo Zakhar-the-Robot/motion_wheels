@@ -14,11 +14,14 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <stdio.h>
 #include "esp_err.h"
+#include "esp_log.h"
+#include "sdkconfig.h"
 
-
-esp_err_t motors_init(int pin_a1, int pin_a2, int pin_b1, int pin_b2);
+void init_write_pin(int pin);
+void set_pin(int pin, bool value);
 
 
 
