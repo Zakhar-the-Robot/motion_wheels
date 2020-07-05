@@ -1,6 +1,7 @@
 #include "position_unit.h"
 
-static const char* TAG = "pos";
+static const char *TAG = "pos";
+
 static MPU_t MPU;  // a default MPU object
 
 static mpud::raw_axes_t accelRaw;   // x, y, z axes as int16
@@ -31,7 +32,7 @@ esp_err_t mpu_init(void)
     MPU.setAddr(mpud::MPU_I2CADDRESS_AD0_LOW);  // set address, default is AD0_LOW
 
     esp_err_t res = MPU.testConnection();
-    if(res != ESP_OK){
+    if (res != ESP_OK) {
         ESP_LOGE(TAG, "Failed to connect to the MPU, error=%#X", res);
         return res;
     }
@@ -44,6 +45,6 @@ esp_err_t mpu_init(void)
     // ESP_ERROR_CHECK(MPU.setGyroFullScale(mpud::GYRO_FS_500DPS));
     // ESP_ERROR_CHECK(MPU.setAccelFullScale(mpud::ACCEL_FS_4G));
 
-    xTaskCreate(mpu_task,"mpu_task",4096,NULL,5,NULL);
+    xTaskCreate(mpu_task, "mpu_task", 4096, NULL, 5, NULL);
     return ESP_OK;
 }

@@ -23,9 +23,6 @@ extern "C" {
 void init_write_pin(int pin);
 void set_pin(int pin, bool value);
 
-
-
-
 #ifdef __cplusplus
 }
 #endif
