@@ -21,4 +21,4 @@
 #define I2C_DEFAULT_SCL_SLAVE_PIN GPIO_NUM_19
 
 esp_err_t i2c_master_init(gpio_num_t sda, gpio_num_t scl, uint32_t clock);
-esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl);
+esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address);

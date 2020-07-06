@@ -1,4 +1,3 @@
-
 /* Copyright (c) 2020 Andrei Gramakov. All rights reserved.
  *
  * This file is licensed under the terms of the MIT license.
@@ -9,20 +8,7 @@
  */
 
 #pragma once
+#include "driver/gpio.h"
+#include "hw_motors.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdbool.h>
-#include <stdio.h>
-#include "esp_err.h"
-#include "esp_log.h"
-#include "sdkconfig.h"
-
-void init_write_pin(int pin);
-void set_pin(int pin, bool value);
-
-#ifdef __cplusplus
-}
-#endif
+extern Motors_dc2platform motors;

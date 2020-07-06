@@ -14,6 +14,9 @@
 
 static const char* TAG = "zk_i2c";
 
+#define DATA_LENGTH 512                  /*!< Data buffer length of test buffer */
+#define I2C_SLAVE_TX_BUF_LEN (2 * DATA_LENGTH)              /*!< I2C slave tx buffer size */
+#define I2C_SLAVE_RX_BUF_LEN (2 * DATA_LENGTH)              /*!< I2C slave rx buffer size */
 
 esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address)
 {
@@ -24,7 +27,7 @@ esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address)
     conf.scl_io_num = scl;
     conf.slave.slave_addr = address;
     ESP_ERROR_CHECK(i2c_param_config(I2C_NUM_0, &conf));
-    ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, conf.mode, 0, 0, 0));
+    ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, conf.mode, I2C_SLAVE_RX_BUF_LEN, I2C_SLAVE_TX_BUF_LEN, 0));
     return ESP_OK;
 }
 
