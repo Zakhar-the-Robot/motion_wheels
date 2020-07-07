@@ -19,7 +19,7 @@
 
 static const char *TAG = "motors";
 
-Motors_dc2platform motors(GPIO_NUM_26, GPIO_NUM_25, GPIO_NUM_33, GPIO_NUM_32);
+Motors_dc2platform motors(GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26);
 
 void init_write_pin(int pin)
 {

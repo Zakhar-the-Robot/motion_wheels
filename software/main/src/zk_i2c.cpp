@@ -21,13 +21,16 @@ static const char* TAG = "zk_i2c";
 esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address)
 {
     ESP_LOGI(TAG, "Slave init");
-    i2c_config_t conf;
-    conf.mode = I2C_MODE_SLAVE;
-    conf.sda_io_num = sda;
-    conf.scl_io_num = scl;
-    conf.slave.slave_addr = address;
-    ESP_ERROR_CHECK(i2c_param_config(I2C_NUM_0, &conf));
-    ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, conf.mode, I2C_SLAVE_RX_BUF_LEN, I2C_SLAVE_TX_BUF_LEN, 0));
+    i2c_config_t conf_slave;
+    conf_slave.mode = I2C_MODE_SLAVE;
+    conf_slave.sda_io_num = sda;
+    conf_slave.sda_pullup_en = GPIO_PULLUP_ENABLE;
+    conf_slave.scl_io_num = scl;
+    conf_slave.scl_pullup_en = GPIO_PULLUP_ENABLE;
+    conf_slave.slave.addr_10bit_en = 0;
+    conf_slave.slave.slave_addr = address;
+    ESP_ERROR_CHECK(i2c_param_config(I2C_NUM_1, &conf_slave));
+    ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_1, conf_slave.mode, I2C_SLAVE_RX_BUF_LEN, I2C_SLAVE_TX_BUF_LEN, 0));
     return ESP_OK;
 }
 

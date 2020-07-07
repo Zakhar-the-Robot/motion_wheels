@@ -30,7 +30,7 @@ static const char *TAG = "Main task";
 
 static esp_err_t start_mpu(void)
 {
-    ESP_RETURN_RES_ON_ERROR(i2c_master_init(GPIO_NUM_22, GPIO_NUM_23, 100000));
+    ESP_RETURN_RES_ON_ERROR(i2c_master_init(GPIO_NUM_21, GPIO_NUM_19, 100000));
     ESP_RETURN_RES_ON_ERROR(mpu_init());
     ESP_LOGI(TAG, "MPU ready!");
     return ESP_OK;
@@ -39,9 +39,27 @@ static esp_err_t start_mpu(void)
 static esp_err_t start_i2c_slave(void)
 {
     uint8_t addr = 0x2a;
-    i2c_slave_init(GPIO_NUM_19, GPIO_NUM_21, addr);
+    i2c_slave_init(GPIO_NUM_13, GPIO_NUM_12, addr);
     ESP_LOGI(TAG, "I2C slave ready! Address: 0x%x", addr);
     return ESP_OK;
+}
+
+static void start_motors(void){
+        motors.MoveForward();
+        vTaskDelay(100 / portTICK_RATE_MS);
+        motors.Stop();
+
+        vTaskDelay(150 / portTICK_RATE_MS);
+
+        motors.MoveLeft();
+        vTaskDelay(150 / portTICK_RATE_MS);
+        motors.Stop();
+
+        vTaskDelay(150 / portTICK_RATE_MS);
+
+        motors.MoveRight();
+        vTaskDelay(150 / portTICK_RATE_MS);
+        motors.Stop();
 }
 
 extern "C" void app_main()
@@ -49,12 +67,7 @@ extern "C" void app_main()
     ESP_LOGI(TAG, "Start!");
     // start_mpu();
     start_i2c_slave();
-    while (1) {
-        motors.MoveForward();
-        vTaskDelay(1000 / portTICK_RATE_MS);
-        motors.MoveBackward();
-        vTaskDelay(1000 / portTICK_RATE_MS);
-    }
+    start_motors();
     ESP_LOGI(TAG, "Init done");
 
 }
