@@ -12,3 +12,9 @@
 #include "hw_motors.hpp"
 
 extern Motors_dc2platform motors;
+void W(void);
+void A(void);
+void S(void);
+void D(void);
+void Stop(void);
+void Shiver(void);

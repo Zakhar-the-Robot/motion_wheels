@@ -11,6 +11,7 @@ set(srcs
             "main.cpp"
             "src/hw_motors_impl.cpp"
             "src/position_unit.cpp"
+            "src/controlcallback.cpp"
             "src/zk_i2c.cpp")
 
 

@@ -48,15 +48,11 @@ static void start_motors(void){
         motors.MoveForward();
         vTaskDelay(100 / portTICK_RATE_MS);
         motors.Stop();
-
         vTaskDelay(150 / portTICK_RATE_MS);
-
         motors.MoveLeft();
         vTaskDelay(150 / portTICK_RATE_MS);
         motors.Stop();
-
         vTaskDelay(150 / portTICK_RATE_MS);
-
         motors.MoveRight();
         vTaskDelay(150 / portTICK_RATE_MS);
         motors.Stop();

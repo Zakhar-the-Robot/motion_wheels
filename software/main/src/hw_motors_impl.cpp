@@ -14,7 +14,7 @@
 #include "freertos/portmacro.h"
 #include "freertos/task.h"
 #include "hw_motors_impl.hpp"
-// #include "functions.hpp"
+#include "common_config.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "motors";
@@ -38,4 +38,51 @@ void set_pin(int pin, bool value)
 {
     gpio_set_level((gpio_num_t)pin, value);
     ESP_LOGI(TAG, "Pin no.%d set to: %d", pin, value);
+}
+
+static void delay(uint32_t ms){
+    vTaskDelay(ms / portTICK_RATE_MS);
+}
+
+void W(void) {
+    motors.MoveForward();
+#if MOTORS_STEP_MODE
+    delay(MOTORS_STEP_TIMEOUT_MS);
+    motors.Stop();
+#endif
+}
+void S(void) {
+    motors.MoveBackward();
+#if MOTORS_STEP_MODE
+    delay(MOTORS_STEP_TIMEOUT_MS);
+    motors.Stop();
+#endif
+}
+void A(void) {
+    motors.MoveLeft();
+#if MOTORS_STEP_MODE
+    delay(MOTORS_STEP_TIMEOUT_MS);
+    motors.Stop();
+#endif
+}
+void D(void) {
+    motors.MoveRight();
+#if MOTORS_STEP_MODE
+    delay(MOTORS_STEP_TIMEOUT_MS);
+    motors.Stop();
+#endif
+}
+void Shiver(void) {
+    for (size_t i = 0; i < CONFIG_SHIVERS; i++)
+    {
+        motors.MoveRight();
+        delay(CONFIG_SHIVER_PERIOD_MS/2);
+        motors.MoveLeft();
+        delay(CONFIG_SHIVER_PERIOD_MS/2);
+    }
+    Stop();
+}
+
+void Stop(void) {
+    motors.Stop();
 }
