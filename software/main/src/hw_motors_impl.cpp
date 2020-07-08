@@ -24,7 +24,6 @@ Motors_dc2platform motors(GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26);
 void init_write_pin(int pin)
 {
     gpio_config_t io_conf;
-
     io_conf.intr_type = GPIO_INTR_DISABLE; // disable interrupt
     io_conf.mode = GPIO_MODE_OUTPUT; // set as output mode
     io_conf.pin_bit_mask = 1ULL << pin; // bit mask of the pins that you want to set, e.g.GPIO
@@ -37,52 +36,44 @@ void init_write_pin(int pin)
 void set_pin(int pin, bool value)
 {
     gpio_set_level((gpio_num_t)pin, value);
-    ESP_LOGI(TAG, "Pin no.%d set to: %d", pin, value);
+    ESP_LOGV(TAG, "Pin no.%d set to: %d", pin, value);
 }
 
-static void delay(uint32_t ms){
+void motors_delay(uint32_t ms)
+{
     vTaskDelay(ms / portTICK_RATE_MS);
 }
 
-void W(void) {
-    motors.MoveForward();
-#if MOTORS_STEP_MODE
-    delay(MOTORS_STEP_TIMEOUT_MS);
-    motors.Stop();
-#endif
+void W(void)
+{
+    motors.MoveForward(0);
 }
-void S(void) {
-    motors.MoveBackward();
-#if MOTORS_STEP_MODE
-    delay(MOTORS_STEP_TIMEOUT_MS);
-    motors.Stop();
-#endif
+
+void S(void)
+{
+    motors.MoveBackward(0);
 }
-void A(void) {
-    motors.MoveLeft();
-#if MOTORS_STEP_MODE
-    delay(MOTORS_STEP_TIMEOUT_MS);
-    motors.Stop();
-#endif
+
+void A(void)
+{
+    motors.MoveLeft(0);
 }
-void D(void) {
-    motors.MoveRight();
-#if MOTORS_STEP_MODE
-    delay(MOTORS_STEP_TIMEOUT_MS);
-    motors.Stop();
-#endif
+
+void D(void)
+{
+    motors.MoveRight(0);
 }
-void Shiver(void) {
-    for (size_t i = 0; i < CONFIG_SHIVERS; i++)
-    {
-        motors.MoveRight();
-        delay(CONFIG_SHIVER_PERIOD_MS/2);
-        motors.MoveLeft();
-        delay(CONFIG_SHIVER_PERIOD_MS/2);
+
+void Shiver(void)
+{
+    for (size_t i = 0; i < CONFIG_SHIVERS; i++) {
+        motors.MoveRight(CONFIG_SHIVER_PERIOD_MS / 2);
+        motors.MoveLeft(CONFIG_SHIVER_PERIOD_MS / 2);
     }
     Stop();
 }
 
-void Stop(void) {
-    motors.Stop();
+void Stop(void)
+{
+    motors.Stop(0);
 }

@@ -29,7 +29,12 @@
     "type_traits": "cpp",
     "utility": "cpp",
     "xlocmon": "cpp",
-    "xtr1common": "cpp"
+    "xtr1common": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp",
+    "xutility": "cpp"
   },
   "idf.portWin": "COM14"
 }

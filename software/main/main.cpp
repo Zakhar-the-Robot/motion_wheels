@@ -45,17 +45,17 @@ static esp_err_t start_i2c_slave(void)
 }
 
 static void start_motors(void){
-        motors.MoveForward();
-        vTaskDelay(100 / portTICK_RATE_MS);
-        motors.Stop();
-        vTaskDelay(150 / portTICK_RATE_MS);
-        motors.MoveLeft();
-        vTaskDelay(150 / portTICK_RATE_MS);
-        motors.Stop();
-        vTaskDelay(150 / portTICK_RATE_MS);
-        motors.MoveRight();
-        vTaskDelay(150 / portTICK_RATE_MS);
-        motors.Stop();
+        motors.MoveForward(100);
+        // vTaskDelay(100 / portTICK_RATE_MS);
+        motors.Stop(150);
+        // vTaskDelay(150 / portTICK_RATE_MS);
+        motors.MoveLeft(150);
+        // vTaskDelay(150 / portTICK_RATE_MS);
+        motors.Stop(150);
+        // vTaskDelay(150 / portTICK_RATE_MS);
+        motors.MoveRight(150);
+        // vTaskDelay(150 / portTICK_RATE_MS);
+        // motors.Stop();
 }
 
 extern "C" void app_main()
