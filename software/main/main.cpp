@@ -19,6 +19,7 @@
 #include "zk_i2c.h"
 #include "hw_motors_impl.hpp"
 #include "position_unit.h"
+#include "serial.h"
 
 static const char *TAG = "Main task";
 
@@ -61,9 +62,11 @@ static void start_motors(void){
 extern "C" void app_main()
 {
     ESP_LOGI(TAG, "Start!");
-    // start_mpu();
+    start_mpu();
     start_i2c_slave();
     start_motors();
+    serial_init();
     ESP_LOGI(TAG, "Init done");
+    // serial_poll();
 
 }

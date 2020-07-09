@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include <Arduino.h>
 
 void serial_poll(void);
 void serial_init(void);
