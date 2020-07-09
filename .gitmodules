@@ -16,3 +16,6 @@
 [submodule "software/components/ControlCallbacks"]
 	path = software/components/ControlCallbacks
 	url = git@github.com:an-dr/ControlCallbacks.git
+[submodule "software/components/SharedVirtualRegisters"]
+	path = software/components/SharedVirtualRegisters
+	url = git@github.com:an-dr/SharedVirtualRegisters.git
