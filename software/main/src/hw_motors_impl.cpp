@@ -21,6 +21,10 @@ static const char *TAG = "motors";
 
 Motors_dc2platform motors(GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26);
 
+// static void Forward(int speed, size_t ms){
+
+// }
+
 void init_write_pin(int pin)
 {
     gpio_config_t io_conf;
@@ -62,6 +66,17 @@ void A(void)
 void D(void)
 {
     motors.MoveRight(150);
+}
+
+#define TEST_PER_MS 15
+void Test(void)
+{
+    motors.MoveForward(0);
+    motors_delay(30);
+    for (size_t i = 0; i < (500/TEST_PER_MS); i++) {
+        motors.MoveForward(TEST_PER_MS);
+        motors.Stop(20);
+    }
 }
 
 void Shiver(void)

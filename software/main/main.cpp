@@ -16,6 +16,7 @@
 #include "esp_log.h"
 #include "sdkconfig.h"
 
+#include "common.h"
 #include "zk_i2c.h"
 #include "hw_motors_impl.hpp"
 #include "position_unit.h"
@@ -24,11 +25,6 @@
 #include "SharedVirtualRegisters.hpp"
 
 static const char *TAG = "Main task";
-
-#define ESP_RETURN_RES_ON_ERROR(x) do {\
-    esp_err_t res = (x);\
-    if (res != ESP_OK) return res;\
-    } while(0)
 
 
 static esp_err_t start_mpu(void)
@@ -49,16 +45,10 @@ static esp_err_t start_i2c_slave(void)
 
 static void start_motors(void){
         motors.MoveForward(100);
-        // vTaskDelay(100 / portTICK_RATE_MS);
         motors.Stop(150);
-        // vTaskDelay(150 / portTICK_RATE_MS);
         motors.MoveLeft(150);
-        // vTaskDelay(150 / portTICK_RATE_MS);
         motors.Stop(150);
-        // vTaskDelay(150 / portTICK_RATE_MS);
         motors.MoveRight(150);
-        // vTaskDelay(150 / portTICK_RATE_MS);
-        // motors.Stop();
 }
 
 extern "C" void app_main()

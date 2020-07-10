@@ -12,10 +12,5 @@
 
 #include "ControlCallbacks.h"
 
-#define SIZE_ARR(x) (sizeof(x) / sizeof(x[0]))
-#define CMD_NONE (-1U)
-#define CMD_DONE (0)
-
-extern int cmd;
 extern ControlCallbacks Cc;
 void start_control(void);

@@ -1,3 +1,22 @@
+
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "driver/gpio.h"
+#include "driver/i2c.h"
+#include "esp_err.h"
+#include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/portmacro.h"
+#include "freertos/task.h"
+#include "sdkconfig.h"
+
+#include "I2Cbus.hpp"
+#include "MPU.hpp"
+#include "mpu/math.hpp"
+#include "mpu/types.hpp"
+
 #include "position_unit.h"
 
 static const char *TAG = "pos";

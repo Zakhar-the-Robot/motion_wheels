@@ -10,15 +10,9 @@
 #pragma once
 
 #include <stdint.h>
-#include "driver/gpio.h"
 #include "esp_err.h"
-
-#define I2C_DEFAULT_SDA_MASTER_PIN GPIO_NUM_22
-#define I2C_DEFAULT_SCL_MASTER_PIN GPIO_NUM_23
-#define I2C_DEFAULT_MASTER_CLOCK 100000
-
-#define I2C_DEFAULT_SDA_SLAVE_PIN GPIO_NUM_18
-#define I2C_DEFAULT_SCL_SLAVE_PIN GPIO_NUM_19
+#include "driver/gpio.h"
+#include "common.h"
 
 esp_err_t i2c_master_init(gpio_num_t sda, gpio_num_t scl, uint32_t clock);
 esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address);

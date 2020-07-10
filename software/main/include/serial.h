@@ -12,6 +12,5 @@
 
 #pragma once
 
-
 void serial_poll(void);
 void start_serial(void);
