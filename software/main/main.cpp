@@ -43,13 +43,7 @@ static esp_err_t start_i2c_slave(void)
     return ESP_OK;
 }
 
-static void start_motors(void){
-        motors.MoveForward(100);
-        motors.Stop(150);
-        motors.MoveLeft(150);
-        motors.Stop(150);
-        motors.MoveRight(150);
-}
+
 
 extern "C" void app_main()
 {

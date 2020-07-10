@@ -13,17 +13,38 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/portmacro.h"
 #include "freertos/task.h"
+#include "freertos/timers.h"
 #include "hw_motors_impl.hpp"
 #include "common_config.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "motors";
 
+static  uint32_t stop_ms = 0;
+static  uint32_t go_ms = 0;
+TimerHandle_t timer;
+static  uint32_t timer_ms = 0;
+static bool stopped = true;
+
+typedef  void (Motors_dc2platform::*Motors_dc2platform_pnt_t)(uint32_t);
+
+static  Motors_dc2platform_pnt_t action = NULL;
+
+
 Motors_dc2platform motors(GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26);
 
-// static void Forward(int speed, size_t ms){
+static esp_err_t timer_start(size_t ms)
+{
 
-// }
+    if ( xTimerChangePeriod( timer, (ms / portTICK_PERIOD_MS), 0 ) != pdPASS ) {
+        return ESP_FAIL;
+    }
+    if ( xTimerStart( timer, 0 ) != pdPASS ) {
+        return ESP_FAIL;
+    }
+    return ESP_OK;
+}
+
 
 void init_write_pin(int pin)
 {
@@ -50,22 +71,31 @@ void motors_delay(uint32_t ms)
 
 void W(void)
 {
-    motors.MoveForward(150);
+    timer_start(100);
+    action = &Motors_dc2platform::MoveForward ;
+    stop_ms = 0;
+    go_ms = 100;
 }
 
 void S(void)
 {
-    motors.MoveBackward(150);
+    motors.MoveForward(500);
 }
 
 void A(void)
 {
-    motors.MoveLeft(150);
+    timer_start(100);
+    action = &Motors_dc2platform::MoveForward ;
+    stop_ms = 1;
+    go_ms = 10;
 }
 
 void D(void)
 {
-    motors.MoveRight(150);
+    timer_start(100);
+    action = &Motors_dc2platform::MoveForward ;
+    stop_ms = 5;
+    go_ms = 10;
 }
 
 #define TEST_PER_MS 15
@@ -73,7 +103,7 @@ void Test(void)
 {
     motors.MoveForward(0);
     motors_delay(30);
-    for (size_t i = 0; i < (500/TEST_PER_MS); i++) {
+    for (size_t i = 0; i < (500 / TEST_PER_MS); i++) {
         motors.MoveForward(TEST_PER_MS);
         motors.Stop(20);
     }
@@ -90,5 +120,85 @@ void Shiver(void)
 
 void Stop(void)
 {
+    timer_ms = 0;
+    xTimerStop(timer,0);
     motors.Stop(150);
+}
+
+
+// class MotorsWithSpeed : private Motors_dc2platform {
+// public:
+//     void BackwardForward(MotorsSpeed_t speed, uint32_t ms);
+//     void LeftRight(MotorsSpeed_t speed, uint32_t ms);
+//     void Stop(uint32_t ms);
+// private:
+//     bool stopped;
+// };
+
+// MotorsWithSpeed::BackwardForward(MotorsSpeed_t speed, uint32_t ms)
+// {
+//     uint32_t zero_ms, one_ms;
+//     switch (speed) {
+//     case MOTORS_SPEEDm3:
+//         break;
+//     case MOTORS_SPEEDm2:
+//         break;
+//     case MOTORS_SPEEDm1:
+//         break;
+//     case MOTORS_STOP:
+//         this->Stop(ms);
+//         break;
+//     case MOTORS_SPEED1:
+//         break;
+//     case MOTORS_SPEED2:
+//         break;
+//     case MOTORS_SPEED3:
+//         break;
+//     default:
+//         break;
+//     }
+// }
+
+
+static void motors_task(void *)
+{
+    ESP_LOGI(TAG, "Task Started!");
+    while (1) {
+        if (xTimerIsTimerActive(timer)) {
+            if (action) {
+                stopped = false;
+                (motors.*action)(0);
+                motors_delay(go_ms);
+                if (stop_ms) {
+                    motors.Stop(0);
+                    motors_delay(stop_ms);
+                }
+            }
+        } else { // time is up - full stop
+            if (action) {
+                action = NULL;
+            }
+            if (!stopped) {
+                motors.Stop(0);
+                stopped = true;
+            }
+        }
+        vTaskDelay(1);
+    }
+
+}
+
+void vTimerCallback( TimerHandle_t xTimer ) {xTimerStop(timer,0);};
+
+
+
+void start_motors()
+{
+    motors.MoveForward(100);
+    motors.Stop(150);
+    motors.MoveLeft(150);
+    motors.Stop(150);
+    motors.MoveRight(150);
+    timer = xTimerCreate ( "Timer", 1, pdTRUE, ( void * ) 0, vTimerCallback );
+    xTaskCreate(motors_task, "motors_task", 4096, NULL, 6, NULL);
 }

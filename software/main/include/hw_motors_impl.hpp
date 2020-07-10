@@ -19,6 +19,7 @@ void D(void);
 void Stop(void);
 void Test(void);
 void Shiver(void);
+void start_motors();
 
 typedef enum Speed {
     MOTORS_SPEEDm3 =   -0x03,
@@ -30,11 +31,3 @@ typedef enum Speed {
     MOTORS_SPEED3 =     0x03,
 } MotorsSpeed_t;
 
-// class MotorsWithSpeed : private Motors_dc2platform {
-// public:
-//     void BackwardForward(MotorsSpeed_t speed, uint32_t ms);
-//     void LeftRight(MotorsSpeed_t speed, uint32_t ms);
-//     void Stop(uint32_t ms);
-// private:
-//     bool stopped;
-// }
