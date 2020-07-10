@@ -18,4 +18,4 @@
 
 extern int cmd;
 extern ControlCallbacks Cc;
-void control_poll();
+void start_control(void);

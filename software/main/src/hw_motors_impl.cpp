@@ -46,22 +46,22 @@ void motors_delay(uint32_t ms)
 
 void W(void)
 {
-    motors.MoveForward(0);
+    motors.MoveForward(150);
 }
 
 void S(void)
 {
-    motors.MoveBackward(0);
+    motors.MoveBackward(150);
 }
 
 void A(void)
 {
-    motors.MoveLeft(0);
+    motors.MoveLeft(150);
 }
 
 void D(void)
 {
-    motors.MoveRight(0);
+    motors.MoveRight(150);
 }
 
 void Shiver(void)
@@ -75,5 +75,5 @@ void Shiver(void)
 
 void Stop(void)
 {
-    motors.Stop(0);
+    motors.Stop(150);
 }

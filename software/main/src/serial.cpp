@@ -16,6 +16,7 @@
 #include "freertos/task.h"
 #include "driver/uart.h"
 #include "driver/gpio.h"
+#include "registers.hpp"
 
 static const char *TAG = "serial";
 
@@ -33,13 +34,14 @@ static void serial_task(void *)
     while (1) {
         ch = fgetc(stdin);
         if (ch != 0xFF) {
-            ESP_LOGI(TAG, "Got: %c", ch);
+            regs.Write(REG_CMD, ch);
+            ESP_LOGI(TAG, "Got: %c", regs.Read(REG_CMD));
         }
         vTaskDelay(1);
     }
 }
 
-void serial_init(void)
+void start_serial(void)
 {
     xTaskCreate(&serial_task, "serial_task", 4096, NULL, 5, NULL);
 }

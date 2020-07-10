@@ -34,7 +34,8 @@
     "string_view": "cpp",
     "vector": "cpp",
     "xstring": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "*.ipp": "cpp"
   },
   "idf.portWin": "COM14"
 }

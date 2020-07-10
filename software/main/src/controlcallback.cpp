@@ -13,6 +13,10 @@
 #include "controlcallback.h"
 #include "common_config.h"
 #include "hw_motors_impl.hpp"
+#include "registers.hpp"
+#include "esp_log.h"
+
+static const char *TAG = "ControlCallbacks";
 
 
 static Connection_t connection[7] = {
@@ -27,16 +31,27 @@ static Connection_t connection[7] = {
 
 ControlCallbacks Cc(connection, SIZE_ARR(connection));
 
-void control_poll() {
+void control_poll(void *)
+{
     //TODO replace to regs
-    // int new_cmd = i2c.Get(REG_CMD);
-    int new_cmd = 0;
-    if ((new_cmd != (CMD_NONE&0xFF)) & (new_cmd != CMD_DONE)) {
-        //TODO replace to regs
-        // i2c.Set(REG_MODE, new_cmd); // exec the cmd
-        Cc.Exec(new_cmd);
-        //TODO replace to regs
-        // i2c.Set(REG_CMD, CMD_DONE); // set that is done
+    while (1) {
+        // int new_cmd = i2c.Get(REG_CMD);
+        int new_cmd = regs.Read(REG_CMD);
+        if ((new_cmd != (CMD_NONE & 0xFF)) & (new_cmd != CMD_DONE)) {
+            ESP_LOGI(TAG, "New Command: 0x%x", new_cmd);
+            //TODO replace to regs
+            // i2c.Set(REG_MODE, new_cmd); // exec the cmd
+            Cc.Exec(new_cmd);
+            regs.Write(REG_CMD, CMD_DONE);
+            //TODO replace to regs
+            // i2c.Set(REG_CMD, CMD_DONE); // set that is done
+        }
+        vTaskDelay(1);
     }
+
 }
 
+void start_control(void)
+{
+    xTaskCreate(&control_poll, "control_poll", 4096, NULL, 5, NULL);
+}

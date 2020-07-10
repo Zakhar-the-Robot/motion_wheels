@@ -20,6 +20,8 @@
 #include "hw_motors_impl.hpp"
 #include "position_unit.h"
 #include "serial.h"
+#include "controlcallback.h"
+#include "SharedVirtualRegisters.hpp"
 
 static const char *TAG = "Main task";
 
@@ -65,8 +67,8 @@ extern "C" void app_main()
     start_mpu();
     start_i2c_slave();
     start_motors();
-    serial_init();
+    start_serial();
+    start_control();
     ESP_LOGI(TAG, "Init done");
-    // serial_poll();
 
 }

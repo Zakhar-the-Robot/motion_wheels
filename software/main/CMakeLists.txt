@@ -13,12 +13,14 @@ set(srcs
             "src/position_unit.cpp"
             "src/controlcallback.cpp"
             "src/serial.cpp"
-            "src/zk_i2c.cpp")
+            "src/zk_i2c.cpp"
+            "src/registers.cpp")
 
 
 # Includes
 set(includes    "."
                 "include")
+
 
 
 #  Print

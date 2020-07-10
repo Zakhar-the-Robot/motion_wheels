@@ -14,4 +14,4 @@
 
 
 void serial_poll(void);
-void serial_init(void);
+void start_serial(void);
