@@ -72,7 +72,6 @@ static void rpms_gpio_task(void*){
                 rpm_l++;
             if (io_num == GPIO_NUM_23)
                 rpm_r++;
-            // printf("GPIO[%d] intr, val: %d\n", io_num, gpio_get_level((gpio_num_t)io_num));
         }
     }
 }

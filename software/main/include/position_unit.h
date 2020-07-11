@@ -13,3 +13,7 @@
 #include "esp_err.h"
 
 esp_err_t start_mpu(void);
+void mpu_centralize_angles(void);
+void mpu_calibrate(void);
+
+void mpu_reset(void);

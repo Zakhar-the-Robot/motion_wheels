@@ -70,6 +70,8 @@ enum reristers {
 #define CMD_SPEED2 0x32
 #define CMD_SPEED3 0x33
 
+#define CMD_MPU_CALIBRATE 99
+
 #define CMD_TEST 0x74
 
 /*********************************************************************** Commands*/

@@ -23,15 +23,66 @@
 
 static const char *TAG = "pos";
 
+#define MPU_SAMPLE_RATE_FREQ 10
 // TODO: pack
 static MPU_t MPU;  // a default MPU object
 static mpud::raw_axes_t accelRaw;   // x, y, z axes as int16
 static mpud::raw_axes_t gyroRaw;    // x, y, z axes as int16
 static mpud::float_axes_t accelG;   // accel axes in (g) gravity format
 static mpud::float_axes_t gyroDPS;  // gyro axes in (DPS) º/s format
+static mpud::float_axes_t gyro_calibr;  // gyro axes in (DPS) º/s format
+static uint32_t mpu_period_ms = 1000 / MPU_SAMPLE_RATE_FREQ;
+static mpud::float_axes_t angles;
+static float angles_threshold = 0.7;
+
+void mpu_centralize_angles(void)
+{
+    angles[0] = 0;
+    angles[1] = 0;
+    angles[2] = 0;
+}
+
+void mpu_calibrate(void)
+{
+    ESP_LOGI(TAG, "MPU calibration. Don't move anything!");
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    MPU.rotation(&gyroRaw);       // fetch raw data from the registers
+    gyro_calibr = mpud::gyroDegPerSec(gyroRaw, mpud::GYRO_FS_500DPS);
+    ESP_LOGI(TAG, "MPU calibrated!");
+}
+
+void mpu_reset(void)
+{
+    mpu_calibrate();
+    mpu_centralize_angles();
+}
+
+static void angles_upd(uint32_t ms_from_last_measure, mpud::float_axes_t *old_angles, mpud::float_axes_t *gyro_data)
+{
+    if (abs(gyro_data->x) > angles_threshold) {
+        old_angles->x += gyro_data->x / (1000 / ms_from_last_measure);
+    }
+    if (abs(gyro_data->y) > angles_threshold) {
+        old_angles->y += gyro_data->y / (1000 / ms_from_last_measure);
+    }
+    if (abs(gyro_data->z) > angles_threshold) {
+        old_angles->z += gyro_data->z / (1000 / ms_from_last_measure);
+    }
+}
+
+static void apply_calibr_data(mpud::float_axes_t *data, mpud::float_axes_t *calibr_diff)
+{
+    data->x -= calibr_diff->x;
+    data->y -= calibr_diff->y;
+    data->z -= calibr_diff->z;
+}
 
 static void mpu_task(void *)
 {
+    MPU.rotation(&gyroRaw);       // fetch raw data from the registers
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
+    mpu_calibrate();
+    mpu_centralize_angles();
     ESP_LOGI(TAG, "MPU ready!");
     while (1) {
         // Read
@@ -41,10 +92,14 @@ static void mpu_task(void *)
         // Convert
         accelG = mpud::accelGravity(accelRaw, mpud::ACCEL_FS_4G);
         gyroDPS = mpud::gyroDegPerSec(gyroRaw, mpud::GYRO_FS_500DPS);
+        apply_calibr_data(&gyroDPS, &gyro_calibr);
         // Debug
-        printf("accel: [%+6.2f %+6.2f %+6.2f ] (G) \t", accelG.x, accelG.y, accelG.z);
-        printf("gyro: [%+7.2f %+7.2f %+7.2f ] (º/s)\n", gyroDPS[0], gyroDPS[1], gyroDPS[2]);
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        // printf("accel: [%+6.2f %+6.2f %+6.2f ] (G) \t", accelG.x, accelG.y, accelG.z);
+        // printf("gyro: [%+7.2f %+7.2f %+7.2f ] (º/s)\t", gyroDPS[0], gyroDPS[1], gyroDPS[2]);
+
+        angles_upd(mpu_period_ms, &angles, &gyroDPS);
+        printf("angles: [%+7.2f %+7.2f %+7.2f ] (º)\n", angles[0], angles[1], angles[2]);
+        vTaskDelay(mpu_period_ms / portTICK_PERIOD_MS);
     }
 }
 
@@ -66,7 +121,7 @@ esp_err_t start_mpu(void)
     // Initialize
     ESP_ERROR_CHECK(MPU.initialize());  // initialize the chip and set initial configurations
     // Setup with your configurations
-    // ESP_ERROR_CHECK(MPU.setSampleRate(50));  // set sample rate to 50 Hz
+    ESP_ERROR_CHECK(MPU.setSampleRate(MPU_SAMPLE_RATE_FREQ));
     // ESP_ERROR_CHECK(MPU.setGyroFullScale(mpud::GYRO_FS_500DPS));
     // ESP_ERROR_CHECK(MPU.setAccelFullScale(mpud::ACCEL_FS_4G));
 
