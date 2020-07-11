@@ -1,16 +1,35 @@
-/* Copyright (c) 2020 Andrei Gramakov. All rights reserved.
- *
- * This file is licensed under the terms of the MIT license.
- * For a copy, see: https://opensource.org/licenses/MIT
- *
- * site:    https://agramakov.me
- * e-mail:  mail@agramakov.me
- */
+// *************************************************************************
+//
+// Copyright (c) 2020 Andrei Gramakov. All rights reserved.
+//
+// This file is licensed under the terms of the MIT license.
+// For a copy, see: https://opensource.org/licenses/MIT
+//
+// site:    https://agramakov.me
+// e-mail:  mail@agramakov.me
+//
+// *************************************************************************
 
 #pragma once
 
-#include "common_config.h"
 
+/* Peripherals and sw configs
+   ********************************************************************* */
+
+#define DEBUG 0
+#define PRINT_REGS 0
+#define PRINT_ANGLES 1
+
+#define PLATFORM_I2C_ADDRESS 0x2a
+
+#define MPU_SAMPLE_RATE_HZ 10
+#define MPU_I2C_CLOCK_FREQ_HZ 100000
+#define MPU_INIT_CALIBRATION_DELAY_MS 3000
+
+#define MOTORS_SHIVER_PERIOD_MS 100
+#define MOTORS_SHIVERS 10
+
+/*********************************************************************** Peripherals and sw configs*/
 /* Macros
    ********************************************************************* */
 #define SIZE_ARR(x) (sizeof(x) / sizeof(x[0]))
@@ -24,31 +43,33 @@
 /* Registers
    ********************************************************************* */
 
-// #define REG_CMD         0x00
-// #define REG_MODE        0x01
-// #define REG_LIGHT_LO    0x02
-// #define REG_LIGHT_HI    0x03
-// #define REG_GIRO_X      0x04
-// #define REG_GIRO_Y      0x05
-// #define REG_GIRO_Z      0x06
-
 enum reristers {
-    REG_CMD       = 0x00,
-    REG_MODE      = 0x01,
-    REG_SPEED     = 0x02,
-    REG_LIGHT_LO  = 0x03,
-    REG_LIGHT_HI  = 0x04,
-    REG_GIRO_X    = 0x05,
-    REG_GIRO_Y    = 0x06,
-    REG_GIRO_Z    = 0x07,
+    REG_CMD          = 0x00,
+    REG_MODE         = 0x01,
+    REG_SPEED        = 0x02,
+    REG_RPM_L        = 0x03,
+    REG_RPM_R        = 0x04,
+    REG_ANGLE_X      = 0x05,
+    REG_ANGLE_Y      = 0x06,
+    REG_ANGLE_Z      = 0x07,
 };
 
 /*********************************************************************** Registers*/
 /* Pinout
    ********************************************************************* */
+#define PIN_I2C_S_SDA GPIO_NUM_13
+#define PIN_I2C_S_SCL GPIO_NUM_12
 
 #define PIN_MPU_I2C_SDA GPIO_NUM_21
 #define PIN_MPU_I2C_SCL GPIO_NUM_19
+
+#define PIN_RMP_LEFT GPIO_NUM_22
+#define PIN_RMP_RIGHT GPIO_NUM_23
+
+#define PIN_MOTOR_R1 GPIO_NUM_32
+#define PIN_MOTOR_R2 GPIO_NUM_33
+#define PIN_MOTOR_L1 GPIO_NUM_25
+#define PIN_MOTOR_L2 GPIO_NUM_26
 
 /*********************************************************************** Pinout*/
 /* Commands

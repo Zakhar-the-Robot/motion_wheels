@@ -15,7 +15,7 @@
 #include "freertos/task.h"
 #include "freertos/timers.h"
 #include "hw_motors_impl.hpp"
-#include "common_config.h"
+#include "common.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "motors";
@@ -31,7 +31,7 @@ static  uint32_t timer_ms = 0;
 static MotorsSpeed_t current_speed = MOTORS_STOP;
 static bool stopped = true;
 static  Motors_dc2platform_pnt_t action = NULL;
-Motors_dc2platform motors(GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26);
+Motors_dc2platform motors(PIN_MOTOR_R1, PIN_MOTOR_R2, PIN_MOTOR_L1, PIN_MOTOR_L2);
 
 
 static esp_err_t timer_start(size_t ms)
@@ -150,9 +150,9 @@ void D(void)
 
 void Shiver(void)
 {
-    for (size_t i = 0; i < CONFIG_SHIVERS; i++) {
-        motors.MoveRight(CONFIG_SHIVER_PERIOD_MS / 2);
-        motors.MoveLeft(CONFIG_SHIVER_PERIOD_MS / 2);
+    for (size_t i = 0; i < MOTORS_SHIVERS; i++) {
+        motors.MoveRight(MOTORS_SHIVER_PERIOD_MS / 2);
+        motors.MoveLeft(MOTORS_SHIVER_PERIOD_MS / 2);
     }
     Stop();
 }
@@ -196,8 +196,6 @@ void vTimerCallback( TimerHandle_t xTimer )
 {
     xTimerStop(timer, 0);
 };
-
-
 
 void start_motors()
 {

@@ -12,4 +12,7 @@
 #include "common.h"
 #include "SharedVirtualRegisters.hpp"
 
+#define REGR(n) (regs.Read(n))
+#define REGW(n,v) (regs.Write(n,v))
+
 extern SharedVirtualRegisters regs;

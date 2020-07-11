@@ -25,10 +25,14 @@
 #include "SharedVirtualRegisters.hpp"
 #include "bluetooth_serial.hpp"
 #include "rotsensors.hpp"
+#include "registers.hpp"
+#include "freertos/FreeRTOS.h"
+#include "freertos/portmacro.h"
+#include "freertos/task.h"
 
-static const char *TAG = "Main task";
+static const char *TAG = "main";
 
-
+// TODO implement i2c registers select and read/write
 extern "C" void app_main()
 {
     ESP_LOGI(TAG, "Start!");
@@ -40,4 +44,21 @@ extern "C" void app_main()
     start_rpms();
     start_bt_serial();
     ESP_LOGI(TAG, "Init done");
+
+#if PRINT_REGS
+    while (1) {
+        vTaskDelay(100 / portTICK_RATE_MS);
+        ESP_LOGI(TAG, "regs: [ 0x%x\t0x%x\t0x%x\t0x%x\t0x%x\t0x%x\t0x%x\t0x%x ]",
+                 REGR(REG_CMD),
+                 REGR(REG_MODE),
+                 REGR(REG_SPEED),
+                 REGR(REG_RPM_L),
+                 REGR(REG_RPM_R),
+                 REGR(REG_ANGLE_X),
+                 REGR(REG_ANGLE_Y),
+                 REGR(REG_ANGLE_Z)
+                );
+    }
+#endif
+
 }

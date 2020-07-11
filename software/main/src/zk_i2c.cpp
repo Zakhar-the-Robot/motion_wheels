@@ -11,6 +11,7 @@
 
 #include "zk_i2c.h"
 #include "driver/i2c.h"
+#include "common.h"
 
 static const char* TAG = "zk_i2c";
 
@@ -52,8 +53,7 @@ esp_err_t i2c_master_init(gpio_num_t sda, gpio_num_t scl, uint32_t clock)
 
 esp_err_t start_i2c_slave(void)
 {
-    uint8_t addr = 0x2a;
-    i2c_slave_init(GPIO_NUM_13, GPIO_NUM_12, addr);
-    ESP_LOGI(TAG, "I2C slave ready! Address: 0x%x", addr);
+    i2c_slave_init(PIN_I2C_S_SDA, PIN_I2C_S_SCL, PLATFORM_I2C_ADDRESS);
+    ESP_LOGI(TAG, "I2C slave ready! Address: 0x%x", PLATFORM_I2C_ADDRESS);
     return ESP_OK;
 }

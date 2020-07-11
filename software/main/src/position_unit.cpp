@@ -18,12 +18,13 @@
 #include "mpu/math.hpp"
 #include "mpu/types.hpp"
 #include "zk_i2c.h"
+#include "registers.hpp"
 
 #include "position_unit.h"
 
 static const char *TAG = "pos";
 
-#define MPU_SAMPLE_RATE_FREQ 10
+
 // TODO: pack
 static MPU_t MPU;  // a default MPU object
 static mpud::raw_axes_t accelRaw;   // x, y, z axes as int16
@@ -31,7 +32,7 @@ static mpud::raw_axes_t gyroRaw;    // x, y, z axes as int16
 static mpud::float_axes_t accelG;   // accel axes in (g) gravity format
 static mpud::float_axes_t gyroDPS;  // gyro axes in (DPS) º/s format
 static mpud::float_axes_t gyro_calibr;  // gyro axes in (DPS) º/s format
-static uint32_t mpu_period_ms = 1000 / MPU_SAMPLE_RATE_FREQ;
+static uint32_t mpu_period_ms = 1000 / MPU_SAMPLE_RATE_HZ;
 static mpud::float_axes_t angles;
 static float angles_threshold = 0.7;
 
@@ -80,7 +81,7 @@ static void apply_calibr_data(mpud::float_axes_t *data, mpud::float_axes_t *cali
 static void mpu_task(void *)
 {
     MPU.rotation(&gyroRaw);       // fetch raw data from the registers
-    vTaskDelay(3000 / portTICK_PERIOD_MS);
+    vTaskDelay(MPU_INIT_CALIBRATION_DELAY_MS / portTICK_PERIOD_MS);
     mpu_calibrate();
     mpu_centralize_angles();
     ESP_LOGI(TAG, "MPU ready!");
@@ -98,7 +99,12 @@ static void mpu_task(void *)
         // printf("gyro: [%+7.2f %+7.2f %+7.2f ] (º/s)\t", gyroDPS[0], gyroDPS[1], gyroDPS[2]);
 
         angles_upd(mpu_period_ms, &angles, &gyroDPS);
-        printf("angles: [%+7.2f %+7.2f %+7.2f ] (º)\n", angles[0], angles[1], angles[2]);
+        REGW(REG_ANGLE_X,angles[0]);
+        REGW(REG_ANGLE_Y,angles[1]);
+        REGW(REG_ANGLE_Z,angles[2]);
+    #if PRINT_ANGLES
+        printf("angles: [ %d\t%d\t%d ] (º)\n", (int8_t)REGR(REG_ANGLE_X), (int8_t)REGR(REG_ANGLE_Y), (int8_t)REGR(REG_ANGLE_Z));
+    #endif
         vTaskDelay(mpu_period_ms / portTICK_PERIOD_MS);
     }
 }
@@ -106,7 +112,7 @@ static void mpu_task(void *)
 esp_err_t start_mpu(void)
 {
 
-    ESP_RETURN_RES_ON_ERROR(i2c_master_init(PIN_MPU_I2C_SDA, PIN_MPU_I2C_SCL, 100000));
+    ESP_RETURN_RES_ON_ERROR(i2c_master_init(PIN_MPU_I2C_SDA, PIN_MPU_I2C_SCL, MPU_I2C_CLOCK_FREQ_HZ));
 
     MPU.setBus(i2c0);  // set bus port, not really needed since default is i2c0
     MPU.setAddr(mpud::MPU_I2CADDRESS_AD0_LOW);  // set address, default is AD0_LOW
@@ -121,7 +127,7 @@ esp_err_t start_mpu(void)
     // Initialize
     ESP_ERROR_CHECK(MPU.initialize());  // initialize the chip and set initial configurations
     // Setup with your configurations
-    ESP_ERROR_CHECK(MPU.setSampleRate(MPU_SAMPLE_RATE_FREQ));
+    ESP_ERROR_CHECK(MPU.setSampleRate(MPU_SAMPLE_RATE_HZ));
     // ESP_ERROR_CHECK(MPU.setGyroFullScale(mpud::GYRO_FS_500DPS));
     // ESP_ERROR_CHECK(MPU.setAccelFullScale(mpud::ACCEL_FS_4G));
 
