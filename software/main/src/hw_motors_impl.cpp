@@ -24,6 +24,7 @@ static  uint32_t stop_ms = 0;
 static  uint32_t go_ms = 0;
 TimerHandle_t timer;
 static  uint32_t timer_ms = 0;
+static MotorsSpeed_t current_speed = MOTORS_STOP;
 static bool stopped = true;
 
 typedef  void (Motors_dc2platform::*Motors_dc2platform_pnt_t)(uint32_t);
@@ -44,7 +45,6 @@ static esp_err_t timer_start(size_t ms)
     }
     return ESP_OK;
 }
-
 
 void init_write_pin(int pin)
 {
@@ -69,45 +69,84 @@ void motors_delay(uint32_t ms)
     vTaskDelay(ms / portTICK_RATE_MS);
 }
 
+static void SetSpeed(MotorsSpeed_t speed)
+{
+    switch (speed) {
+    case MOTORS_SPEED1:
+        go_ms = 10;
+        stop_ms = 10;
+        break;
+    case MOTORS_SPEED2:
+        go_ms = 20;
+        stop_ms = 10;
+        break;
+    case MOTORS_SPEEDMAX:
+        go_ms = 50;
+        stop_ms = 0;
+        break;
+    case MOTORS_STOP:
+        action = NULL;
+        go_ms = 0;
+        stop_ms = 0;
+        break;
+    default:
+        break;
+    }
+    current_speed = speed;
+}
+
+
+
+void S0(void)
+{
+    SetSpeed(MOTORS_STOP);
+}
+
+void S1(void)
+{
+    SetSpeed(MOTORS_SPEED1);
+}
+
+void S2(void)
+{
+    SetSpeed(MOTORS_SPEED2);
+}
+
+void SMAX(void)
+{
+    SetSpeed(MOTORS_SPEEDMAX);
+}
+
 void W(void)
 {
+    stopped = false;
     timer_start(100);
-    action = &Motors_dc2platform::MoveForward ;
-    stop_ms = 0;
-    go_ms = 100;
+    action = &Motors_dc2platform::MoveForward;
 }
 
 void S(void)
 {
-    motors.MoveForward(500);
+    stopped = false;
+    timer_start(100);
+    action = &Motors_dc2platform::MoveBackward;
 }
 
 void A(void)
 {
+
+    stopped = false;
     timer_start(100);
-    action = &Motors_dc2platform::MoveForward ;
-    stop_ms = 1;
-    go_ms = 10;
+    action = &Motors_dc2platform::MoveLeft;
+
 }
 
 void D(void)
 {
+    stopped = false;
     timer_start(100);
-    action = &Motors_dc2platform::MoveForward ;
-    stop_ms = 5;
-    go_ms = 10;
+    action = &Motors_dc2platform::MoveRight;
 }
 
-#define TEST_PER_MS 15
-void Test(void)
-{
-    motors.MoveForward(0);
-    motors_delay(30);
-    for (size_t i = 0; i < (500 / TEST_PER_MS); i++) {
-        motors.MoveForward(TEST_PER_MS);
-        motors.Stop(20);
-    }
-}
 
 void Shiver(void)
 {
@@ -120,44 +159,10 @@ void Shiver(void)
 
 void Stop(void)
 {
+    stopped = true;
     timer_ms = 0;
-    xTimerStop(timer,0);
-    motors.Stop(150);
+    xTimerStop(timer, 0);
 }
-
-
-// class MotorsWithSpeed : private Motors_dc2platform {
-// public:
-//     void BackwardForward(MotorsSpeed_t speed, uint32_t ms);
-//     void LeftRight(MotorsSpeed_t speed, uint32_t ms);
-//     void Stop(uint32_t ms);
-// private:
-//     bool stopped;
-// };
-
-// MotorsWithSpeed::BackwardForward(MotorsSpeed_t speed, uint32_t ms)
-// {
-//     uint32_t zero_ms, one_ms;
-//     switch (speed) {
-//     case MOTORS_SPEEDm3:
-//         break;
-//     case MOTORS_SPEEDm2:
-//         break;
-//     case MOTORS_SPEEDm1:
-//         break;
-//     case MOTORS_STOP:
-//         this->Stop(ms);
-//         break;
-//     case MOTORS_SPEED1:
-//         break;
-//     case MOTORS_SPEED2:
-//         break;
-//     case MOTORS_SPEED3:
-//         break;
-//     default:
-//         break;
-//     }
-// }
 
 
 static void motors_task(void *)
@@ -166,11 +171,10 @@ static void motors_task(void *)
     while (1) {
         if (xTimerIsTimerActive(timer)) {
             if (action) {
-                stopped = false;
-                (motors.*action)(0);
-                motors_delay(go_ms);
+                if (go_ms) {
+                    (motors.*action)(go_ms);
+                }
                 if (stop_ms) {
-                    motors.Stop(0);
                     motors_delay(stop_ms);
                 }
             }
@@ -188,7 +192,10 @@ static void motors_task(void *)
 
 }
 
-void vTimerCallback( TimerHandle_t xTimer ) {xTimerStop(timer,0);};
+void vTimerCallback( TimerHandle_t xTimer )
+{
+    xTimerStop(timer, 0);
+};
 
 
 
@@ -200,5 +207,5 @@ void start_motors()
     motors.Stop(150);
     motors.MoveRight(150);
     timer = xTimerCreate ( "Timer", 1, pdTRUE, ( void * ) 0, vTimerCallback );
-    xTaskCreate(motors_task, "motors_task", 4096, NULL, 6, NULL);
+    xTaskCreate(motors_task, "motors_task", 4096, NULL, 7, NULL);
 }

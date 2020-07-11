@@ -20,15 +20,18 @@
 
 static const char *TAG = "ControlCallbacks";
 
-static Connection_t connection[8] = {
-    {.cmd_code = CMD_FORWARD, .func = W},
-    {.cmd_code = CMD_BACKWARD, .func = S},
-    {.cmd_code = CMD_LEFT, .func = A},
-    {.cmd_code = CMD_RIGHT, .func = D},
-    {.cmd_code = CMD_SHIVER, .func = Shiver},
-    {.cmd_code = CMD_TEST, .func = Test},
-    {.cmd_code = CMD_STOP, .func = Stop},
-    {.cmd_code = CMD_STOP_KB, .func = Stop}
+static Connection_t connection[] = {
+    {.cmd_code = CMD_FORWARD,   .func = W       },
+    {.cmd_code = CMD_BACKWARD,  .func = S       },
+    {.cmd_code = CMD_LEFT,      .func = A       },
+    {.cmd_code = CMD_RIGHT,     .func = D       },
+    {.cmd_code = CMD_SHIVER,    .func = Shiver  },
+    {.cmd_code = CMD_STOP,      .func = Stop    },
+    {.cmd_code = CMD_STOP_KB,   .func = Stop    },
+    {.cmd_code = CMD_SPEED0,    .func = S0      },
+    {.cmd_code = CMD_SPEED1,    .func = S1      },
+    {.cmd_code = CMD_SPEED2,    .func = S2      },
+    {.cmd_code = CMD_SPEED3,    .func = SMAX    },
 };
 
 ControlCallbacks Cc(connection, SIZE_ARR(connection));
@@ -45,7 +48,6 @@ void control_poll(void *)
         }
         vTaskDelay(1);
     }
-
 }
 
 void start_control(void)

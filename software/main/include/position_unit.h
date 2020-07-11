@@ -12,5 +12,4 @@
 
 #include "esp_err.h"
 
-
-esp_err_t mpu_init(void);
+esp_err_t start_mpu(void);

@@ -27,14 +27,6 @@
 static const char *TAG = "Main task";
 
 
-static esp_err_t start_mpu(void)
-{
-    ESP_RETURN_RES_ON_ERROR(i2c_master_init(GPIO_NUM_21, GPIO_NUM_19, 100000));
-    ESP_RETURN_RES_ON_ERROR(mpu_init());
-    ESP_LOGI(TAG, "MPU ready!");
-    return ESP_OK;
-}
-
 static esp_err_t start_i2c_slave(void)
 {
     uint8_t addr = 0x2a;

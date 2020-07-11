@@ -12,22 +12,22 @@
 #include "hw_motors.hpp"
 
 extern Motors_dc2platform motors;
+void S0(void);
+void S1(void);
+void S2(void);
+void SMAX(void);
 void W(void);
 void A(void);
 void S(void);
 void D(void);
 void Stop(void);
-void Test(void);
 void Shiver(void);
 void start_motors();
 
 typedef enum Speed {
-    MOTORS_SPEEDm3 =   -0x03,
-    MOTORS_SPEEDm2 =   -0x02,
-    MOTORS_SPEEDm1 =   -0x01,
     MOTORS_STOP =       0x00,
     MOTORS_SPEED1 =     0x01,
     MOTORS_SPEED2 =     0x02,
-    MOTORS_SPEED3 =     0x03,
+    MOTORS_SPEEDMAX =   0x03,
 } MotorsSpeed_t;
 

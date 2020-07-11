@@ -9,4 +9,4 @@
 
 #include "registers.hpp"
 
-SharedVirtualRegisters regs(16);
+SharedVirtualRegisters regs(32);

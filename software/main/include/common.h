@@ -24,13 +24,24 @@
 /* Registers
    ********************************************************************* */
 
-#define REG_CMD         0x00
-#define REG_MODE        0x01
-#define REG_LIGHT_LO    0x02
-#define REG_LIGHT_HI    0x03
-#define REG_GIRO_X      0x04
-#define REG_GIRO_Y      0x05
-#define REG_GIRO_Z      0x06
+// #define REG_CMD         0x00
+// #define REG_MODE        0x01
+// #define REG_LIGHT_LO    0x02
+// #define REG_LIGHT_HI    0x03
+// #define REG_GIRO_X      0x04
+// #define REG_GIRO_Y      0x05
+// #define REG_GIRO_Z      0x06
+
+enum reristers {
+    REG_CMD       = 0x00,
+    REG_MODE      = 0x01,
+    REG_SPEED     = 0x02,
+    REG_LIGHT_LO  = 0x03,
+    REG_LIGHT_HI  = 0x04,
+    REG_GIRO_X    = 0x05,
+    REG_GIRO_Y    = 0x06,
+    REG_GIRO_Z    = 0x07,
+};
 
 /*********************************************************************** Registers*/
 /* Commands
@@ -44,8 +55,13 @@
 #define CMD_LEFT 97
 #define CMD_RIGHT 100
 #define CMD_SHIVER 0x71
-#define CMD_STOP_KB 32
+#define CMD_STOP_KB 0x20
 #define CMD_STOP 0xA0
+
+#define CMD_SPEED0 0x30
+#define CMD_SPEED1 0x31
+#define CMD_SPEED2 0x32
+#define CMD_SPEED3 0x33
 
 #define CMD_TEST 0x74
 

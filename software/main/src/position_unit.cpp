@@ -12,10 +12,12 @@
 #include "freertos/task.h"
 #include "sdkconfig.h"
 
+#include "common.h"
 #include "I2Cbus.hpp"
 #include "MPU.hpp"
 #include "mpu/math.hpp"
 #include "mpu/types.hpp"
+#include "zk_i2c.h"
 
 #include "position_unit.h"
 
@@ -30,6 +32,7 @@ static mpud::float_axes_t gyroDPS;  // gyro axes in (DPS) º/s format
 
 static void mpu_task(void *)
 {
+    ESP_LOGI(TAG, "MPU ready!");
     while (1) {
         // Read
         MPU.acceleration(&accelRaw);  // fetch raw data from the registers
@@ -45,8 +48,11 @@ static void mpu_task(void *)
     }
 }
 
-esp_err_t mpu_init(void)
+esp_err_t start_mpu(void)
 {
+
+    ESP_RETURN_RES_ON_ERROR(i2c_master_init(GPIO_NUM_21, GPIO_NUM_19, 100000));
+
     MPU.setBus(i2c0);  // set bus port, not really needed since default is i2c0
     MPU.setAddr(mpud::MPU_I2CADDRESS_AD0_LOW);  // set address, default is AD0_LOW
 
