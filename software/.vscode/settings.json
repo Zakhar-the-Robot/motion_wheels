@@ -35,7 +35,9 @@
     "vector": "cpp",
     "xstring": "cpp",
     "xutility": "cpp",
-    "*.ipp": "cpp"
+    "*.ipp": "cpp",
+    "esp_bt_main.h": "c",
+    "esp_bt.h": "c"
   },
   "idf.portWin": "COM14"
 }

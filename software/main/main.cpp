@@ -23,6 +23,7 @@
 #include "serial.h"
 #include "controlcallback.h"
 #include "SharedVirtualRegisters.hpp"
+#include "bluetooth_serial.hpp"
 #include "rotsensors.hpp"
 
 static const char *TAG = "Main task";
@@ -37,5 +38,6 @@ extern "C" void app_main()
     start_serial();
     start_control();
     start_rpms();
+    start_bt_serial();
     ESP_LOGI(TAG, "Init done");
 }

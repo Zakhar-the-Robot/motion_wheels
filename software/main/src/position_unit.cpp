@@ -42,8 +42,8 @@ static void mpu_task(void *)
         accelG = mpud::accelGravity(accelRaw, mpud::ACCEL_FS_4G);
         gyroDPS = mpud::gyroDegPerSec(gyroRaw, mpud::GYRO_FS_500DPS);
         // Debug
-        // printf("accel: [%+6.2f %+6.2f %+6.2f ] (G) \t", accelG.x, accelG.y, accelG.z);
-        // printf("gyro: [%+7.2f %+7.2f %+7.2f ] (º/s)\n", gyroDPS[0], gyroDPS[1], gyroDPS[2]);
+        printf("accel: [%+6.2f %+6.2f %+6.2f ] (G) \t", accelG.x, accelG.y, accelG.z);
+        printf("gyro: [%+7.2f %+7.2f %+7.2f ] (º/s)\n", gyroDPS[0], gyroDPS[1], gyroDPS[2]);
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
@@ -51,7 +51,7 @@ static void mpu_task(void *)
 esp_err_t start_mpu(void)
 {
 
-    ESP_RETURN_RES_ON_ERROR(i2c_master_init(GPIO_NUM_21, GPIO_NUM_19, 100000));
+    ESP_RETURN_RES_ON_ERROR(i2c_master_init(PIN_MPU_I2C_SDA, PIN_MPU_I2C_SCL, 100000));
 
     MPU.setBus(i2c0);  // set bus port, not really needed since default is i2c0
     MPU.setAddr(mpud::MPU_I2CADDRESS_AD0_LOW);  // set address, default is AD0_LOW

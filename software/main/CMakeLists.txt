@@ -9,6 +9,7 @@
 # Sources
 set(srcs
             "main.cpp"
+            "src/bluetooth_serial.cpp"
             "src/hw_motors_impl.cpp"
             "src/position_unit.cpp"
             "src/controlcallback.cpp"
@@ -41,4 +42,5 @@ endforeach()
 message("*******************************************************************************")
 # ********************************************************************** Print
 
-idf_component_register(SRCS ${srcs}  INCLUDE_DIRS ${includes})
+idf_component_register( SRCS ${srcs}
+                        INCLUDE_DIRS ${includes})
