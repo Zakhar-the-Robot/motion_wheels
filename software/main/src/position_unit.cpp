@@ -23,8 +23,8 @@
 
 static const char *TAG = "pos";
 
+// TODO: pack
 static MPU_t MPU;  // a default MPU object
-
 static mpud::raw_axes_t accelRaw;   // x, y, z axes as int16
 static mpud::raw_axes_t gyroRaw;    // x, y, z axes as int16
 static mpud::float_axes_t accelG;   // accel axes in (g) gravity format

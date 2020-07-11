@@ -20,19 +20,19 @@
 
 static const char *TAG = "motors";
 
+typedef  void (Motors_dc2platform::*Motors_dc2platform_pnt_t)(uint32_t);
+
+
+// TODO: pack
 static  uint32_t stop_ms = 0;
 static  uint32_t go_ms = 0;
 TimerHandle_t timer;
 static  uint32_t timer_ms = 0;
 static MotorsSpeed_t current_speed = MOTORS_STOP;
 static bool stopped = true;
-
-typedef  void (Motors_dc2platform::*Motors_dc2platform_pnt_t)(uint32_t);
-
 static  Motors_dc2platform_pnt_t action = NULL;
-
-
 Motors_dc2platform motors(GPIO_NUM_32, GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26);
+
 
 static esp_err_t timer_start(size_t ms)
 {

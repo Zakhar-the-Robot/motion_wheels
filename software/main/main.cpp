@@ -38,6 +38,4 @@ extern "C" void app_main()
     start_control();
     start_rpms();
     ESP_LOGI(TAG, "Init done");
-
-
 }

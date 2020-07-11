@@ -20,12 +20,11 @@
 #include "rotsensors.hpp"
 static const char *TAG = "RPMs";
 
-
+// TODO: pack
 static int rpm_l = 0;
 static int rpm_r = 0;
-
-
 static xQueueHandle gpio_evt_queue = NULL;
+
 
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
@@ -43,7 +42,7 @@ static void rmp_gpio_init(void){
     //create a queue to handle gpio event from isr
     gpio_evt_queue = xQueueCreate(30, sizeof(uint32_t));
     gpio_install_isr_service(0);
-        //hook isr handler for specific gpio pin
+    //hook isr handler for specific gpio pin
     gpio_isr_handler_add(GPIO_NUM_22, gpio_isr_handler, (void*) GPIO_NUM_22);
     //hook isr handler for specific gpio pin
     gpio_isr_handler_add(GPIO_NUM_23, gpio_isr_handler, (void*) GPIO_NUM_23);
@@ -56,9 +55,9 @@ static void rpms_task(void*){
     int r_per_min_r = 0;
     int disk_gaps = 24;
     while(1){
-        r_per_min_l = (60000 * rpm_l) / (period_ms * disk_gaps);
+        r_per_min_l = (60000 * rpm_l) / (period_ms * disk_gaps); // TODO check the calculation!
         r_per_min_r = (60000 * rpm_r) / (period_ms * disk_gaps);
-        ESP_LOGI(TAG, "RPM_L: %d, RPM_R: %d", r_per_min_l, r_per_min_r);
+        ESP_LOGD(TAG, "RPM_L: %d, RPM_R: %d", r_per_min_l, r_per_min_r);
         rpm_l = 0;
         rpm_r = 0;
         vTaskDelay(500 / portTICK_PERIOD_MS);
