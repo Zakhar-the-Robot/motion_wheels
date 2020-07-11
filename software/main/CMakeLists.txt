@@ -14,6 +14,7 @@ set(srcs
             "src/controlcallback.cpp"
             "src/serial.cpp"
             "src/zk_i2c.cpp"
+            "src/rotsensors.cpp"
             "src/registers.cpp")
 
 

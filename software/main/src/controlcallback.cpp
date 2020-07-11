@@ -42,7 +42,7 @@ void control_poll(void *)
         // int new_cmd = i2c.Get(REG_CMD);
         int new_cmd = regs.Read(REG_CMD);
         if ((new_cmd != (CMD_NONE & 0xFF)) & (new_cmd != CMD_DONE)) {
-            ESP_LOGI(TAG, "New Command: 0x%x", new_cmd);
+            ESP_LOGD(TAG, "New Command: 0x%x", new_cmd);
             Cc.Exec(new_cmd);
             regs.Write(REG_CMD, CMD_DONE);
         }

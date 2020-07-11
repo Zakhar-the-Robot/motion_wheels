@@ -23,18 +23,9 @@
 #include "serial.h"
 #include "controlcallback.h"
 #include "SharedVirtualRegisters.hpp"
+#include "rotsensors.hpp"
 
 static const char *TAG = "Main task";
-
-
-static esp_err_t start_i2c_slave(void)
-{
-    uint8_t addr = 0x2a;
-    i2c_slave_init(GPIO_NUM_13, GPIO_NUM_12, addr);
-    ESP_LOGI(TAG, "I2C slave ready! Address: 0x%x", addr);
-    return ESP_OK;
-}
-
 
 
 extern "C" void app_main()
@@ -45,6 +36,8 @@ extern "C" void app_main()
     start_motors();
     start_serial();
     start_control();
+    start_rpms();
     ESP_LOGI(TAG, "Init done");
+
 
 }

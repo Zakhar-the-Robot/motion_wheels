@@ -48,3 +48,12 @@ esp_err_t i2c_master_init(gpio_num_t sda, gpio_num_t scl, uint32_t clock)
     ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, conf.mode, 0, 0, 0));
     return ESP_OK;
 }
+
+
+esp_err_t start_i2c_slave(void)
+{
+    uint8_t addr = 0x2a;
+    i2c_slave_init(GPIO_NUM_13, GPIO_NUM_12, addr);
+    ESP_LOGI(TAG, "I2C slave ready! Address: 0x%x", addr);
+    return ESP_OK;
+}

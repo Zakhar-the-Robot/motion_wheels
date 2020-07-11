@@ -16,3 +16,4 @@
 
 esp_err_t i2c_master_init(gpio_num_t sda, gpio_num_t scl, uint32_t clock);
 esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address);
+esp_err_t start_i2c_slave(void);
