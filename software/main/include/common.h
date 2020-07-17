@@ -18,9 +18,10 @@
 
 #define DEBUG 0
 #define PRINT_REGS 0
-#define PRINT_ANGLES 1
+#define PRINT_ANGLES 0
 
 #define PLATFORM_I2C_ADDRESS 0x2a
+#define I2C_COMMAND_DEFINE_PERIOD_MS 1
 
 #define MPU_SAMPLE_RATE_HZ 10
 #define MPU_I2C_CLOCK_FREQ_HZ 100000
@@ -57,8 +58,8 @@ enum reristers {
 /*********************************************************************** Registers*/
 /* Pinout
    ********************************************************************* */
-#define PIN_I2C_S_SDA GPIO_NUM_13
-#define PIN_I2C_S_SCL GPIO_NUM_12
+#define PIN_I2C_S_SDA GPIO_NUM_14
+#define PIN_I2C_S_SCL GPIO_NUM_27
 
 #define PIN_MPU_I2C_SDA GPIO_NUM_21
 #define PIN_MPU_I2C_SCL GPIO_NUM_19
