@@ -1,12 +1,18 @@
-[submodule "software/lib/ControlCallbacks"]
-	path = software/lib/ControlCallbacks
-	url = git@github.com:an-dr/ControlCallbacks.git
-[submodule "software/lib/hw_motors"]
-	path = software/lib/hw_motors
+[submodule "software/components/esp32-MPU-driver"]
+	path = software/components/esp32-MPU-driver
+	url = https://github.com/natanaeljr/esp32-MPU-driver.git
+[submodule "software/components/I2Cbus"]
+	path = software/components/I2Cbus
+	url = https://github.com/natanaeljr/esp32-I2Cbus.git
+[submodule "software/components/hw_motors"]
+	path = software/components/hw_motors
 	url = git@github.com:an-dr/hw_motors.git
-[submodule "software/lib/RotSensor"]
-	path = software/lib/RotSensor
-	url = git@github.com:an-dr/RotSensor.git
-[submodule "software/lib/arduino_i2c_with_regs"]
-	path = software/lib/arduino_i2c_with_regs
-	url = git@github.com:an-dr/arduino_i2c_with_regs.git
+[submodule "software/components/ControlCallbacks"]
+	path = software/components/ControlCallbacks
+	url = git@github.com:an-dr/ControlCallbacks.git
+[submodule "software/components/SharedVirtualRegisters"]
+	path = software/components/SharedVirtualRegisters
+	url = git@github.com:an-dr/SharedVirtualRegisters.git
+[submodule "schematic/platform/zakhar_kicadlib"]
+	path = schematic/platform/zakhar_kicadlib
+	url = git@github.com:an-dr/zakhar_kicadlib.git
