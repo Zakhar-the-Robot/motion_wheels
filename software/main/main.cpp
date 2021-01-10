@@ -78,9 +78,9 @@ extern "C" void app_main()
             REGR(REG_CMD),
             REGR(REG_ARG),
             REGR(REG_SPEED),
-            REGR(REG_RPM_L),
-            REGR(REG_RPM_R),
+            REGR(REG_ANGLE_X_SIGN),
             REGR(REG_ANGLE_X),
+            REGR(REG_ANGLE_Y_SIGN),
             REGR(REG_ANGLE_Y),
             REGR(REG_ANGLE_Z_SIGN),
             REGR(REG_ANGLE_Z));
