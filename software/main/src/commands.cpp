@@ -95,6 +95,7 @@ static void set_position_do(Motors_dc2platform_pnt_t rot_direction, bool target_
 {
     uint8_t current_angle = REGR(REG_ANGLE_Z);
     uint8_t current_sign = REGR(REG_ANGLE_Z_SIGN);
+    uint8_t old_speed = REGR(REG_SPEED);
     while ((current_sign != target_sign) || (current_angle != target_angle)) {
         current_angle = REGR(REG_ANGLE_Z);
         current_sign = REGR(REG_ANGLE_Z_SIGN);
@@ -106,6 +107,7 @@ static void set_position_do(Motors_dc2platform_pnt_t rot_direction, bool target_
         vTaskDelay(1);
     }
     Stop();
+    SetSpeed((MotorsSpeed_t)old_speed);
 }
 
 static void set_position(Motors_dc2platform_pnt_t rot_direction, int delta_angle)
