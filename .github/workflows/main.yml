@@ -1,0 +1,28 @@
+name: Tests
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Git checkout
+        uses: actions/checkout@v2
+
+      - name: 🔧 Setup 
+        run: 
+          - apt-get install make
+          - apt-get install cmake
+          - mkdir ./build
+        working-directory: ${{ github.workspace }}/test
+        
+      - name: 🧱 Build
+        run: 
+          - cmake -DCMAKE_BUILD_TYPE=Debug -G"Ninja" -B ./build
+          - cmake --build ./build --target test_motors -- -j 3
+        working-directory: ${{ github.workspace }}/test
+        
+      - name: 🏎️ Run
+        run: ctest --extra-verbose
+        working-directory: ${{ github.workspace }}/test/build

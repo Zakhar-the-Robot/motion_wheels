@@ -9,20 +9,28 @@
 # Sources
 set(srcs
             "main.cpp"
-            "src/bluetooth_serial.cpp"
-            "src/commands.cpp"
-            "src/hw_motors_impl.cpp"
-            "src/indication.cpp"
-            "src/position_unit.cpp"
-            "src/controlcallback.cpp"
-            "src/serial.cpp"
-            "src/zk_i2c.cpp"
-            "src/registers.cpp")
+            "src/drivers/indication.cpp"
+            "src/drivers/motors_on_esp32.cpp"
+            "src/high_level/commands.cpp"
+            "src/high_level/controlcallback.cpp"
+            "src/high_level/registers.cpp"
+            "src/port/delay.c"
+            "src/port/millis.c"
+            "src/subsystems_hw/bluetooth_serial.cpp"
+            "src/subsystems_hw/motor_controller.cpp"
+            "src/subsystems_hw/position_unit.cpp"
+            "src/subsystems_hw/serial.cpp"
+            "src/subsystems_hw/zk_i2c.cpp"
+            )
 
 
 # Includes
 set(includes    "."
-                "include")
+                "include"
+                "include/drivers"
+                "include/high_level"
+                "include/port"
+                "include/subsystems_hw")
 
 
 
