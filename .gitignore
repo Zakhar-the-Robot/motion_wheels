@@ -35,3 +35,9 @@ _autosave-*
 **/build/**
 **/sdkconfig
 /software/sdkconfig.old
+
+# IDE files
+**/.idea
+
+# CMake temp
+**/cmake-build-debug/**
