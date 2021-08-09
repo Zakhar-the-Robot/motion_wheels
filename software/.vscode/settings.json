@@ -43,5 +43,5 @@
     "cstring": "cpp",
     "cstdlib": "cpp"
   },
-  "C_Cpp.dimInactiveRegions": true
+  "C_Cpp.dimInactiveRegions": false
 }

@@ -42,7 +42,15 @@
             "mcpwm_reg.h": "c",
             "mcpwm_struct.h": "c",
             "esp_timer.h": "c",
-            "delay.h": "c"
+            "delay.h": "c",
+            "registers.hpp": "c",
+            "svr_types.h": "c",
+            "sharedvirtualregisters.h": "c",
+            "xiosbase": "c",
+            "cmath": "cpp",
+            "macros.h": "c",
+            "config.h": "c",
+            "periph_ctrl.h": "c"
         },
         "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
         "terminal.integrated.profiles.windows": {

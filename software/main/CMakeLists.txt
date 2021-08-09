@@ -5,7 +5,7 @@
 # file(GLOB_RECURSE srcs_cpp "*.cpp")
 # list(APPEND srcs  ${srcs_cpp})
 
-
+idf_component_get_property(freertos_component_dir freertos COMPONENT_DIR)
 # Sources
 set(srcs
             "main.cpp"
@@ -20,9 +20,11 @@ set(srcs
             "src/subsystems_hw/motor_controller.cpp"
             "src/subsystems_hw/position_unit.cpp"
             "src/subsystems_hw/serial.cpp"
-            "src/subsystems_hw/zk_i2c.cpp"
+            "src/subsystems_hw/zk_i2c.c"
+            "../components/SharedVirtualRegisters/src/SharedVirtualRegisters.c"
+            "../components/SharedVirtualRegisters/src/svr_mux_freertos.c"
+            "../components/SharedVirtualRegisters/src/svr_mux_noos.c"
             )
-
 
 # Includes
 set(includes    "."
@@ -30,7 +32,9 @@ set(includes    "."
                 "include/drivers"
                 "include/high_level"
                 "include/port"
-                "include/subsystems_hw")
+                "include/subsystems_hw"
+                "${freertos_component_dir}/include/freertos"
+                "../components/SharedVirtualRegisters/include")
 
 
 
@@ -53,3 +57,5 @@ message("***********************************************************************
 
 idf_component_register( SRCS ${srcs}
                         INCLUDE_DIRS ${includes})
+
+target_compile_definitions(${COMPONENT_TARGET} PRIVATE "-DSVR_CFG_OS=SVR_OS_FREERTOS")

@@ -22,8 +22,6 @@
 #include "sdkconfig.h"
 #include "soc/mcpwm_periph.h"
 
-#include "SharedVirtualRegisters.hpp"
-
 #include "bluetooth_serial.hpp"
 #include "config.h"
 #include "controlcallback.h"
@@ -73,6 +71,7 @@ extern "C" void app_main()
     CHECK_LOAD_STAGE(init_indication(), "Indication");
     led_red(); // boot is started
 
+    RegistersInit(); // TODO #8 check the initialization of registers
 #if ENABLE_MPU
     /* Each MPU angle is represented as [SIGN : INT_VALUE]
        Values for Z-rotation (parallel to floor):

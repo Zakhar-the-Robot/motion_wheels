@@ -18,7 +18,7 @@
    ********************************************************************* */
 
 #define DEBUG 1
-#define PRINT_REGS 1
+#define PRINT_REGS 0
 #define PRINT_ANGLES 0
 
 #define ENABLE_BT 1

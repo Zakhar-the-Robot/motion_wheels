@@ -2,7 +2,7 @@
 //
 // Copyright (c) 2021 Andrei Gramakov. All rights reserved.
 //
-// This file is licensed under the terms of the MIT license.  
+// This file is licensed under the terms of the MIT license.
 // For a copy, see: https://opensource.org/licenses/MIT
 //
 // site:    https://agramakov.me
@@ -12,11 +12,8 @@
 
 #pragma once
 
-#include "SharedVirtualRegisters.hpp"
+#include "SharedVirtualRegisters.h"
 #include "config.h"
-
-#define REGR(n) (regs.Read(n))
-#define REGW(n,v) (regs.Write(n,v))
 
 enum registers {
     REG_CMD = 0x00,
@@ -32,16 +29,39 @@ enum registers {
     REGS_AMOUNT
 };
 
-extern SharedVirtualRegisters regs;
+extern SharedVirtualRegisters_t regs;
 
-inline uint8_t regs_get_cmd(void){
-    return regs.Read(REG_CMD);
+inline uint8_t REGR(uint8_t n)
+{
+    SVR_reg_t res = 0xFF;
+    SVR_Get(&regs, n, &res, false, 0);
+    return (uint8_t)res;
 }
 
-inline uint8_t regs_get_arg(void){
-    return regs.Read(REG_ARG);
+inline void REGW(uint8_t n, uint8_t v)
+{
+    SVR_Set(&regs, n, v, false, 0);
 }
 
-inline uint8_t regs_get_angle_z(void){
-    return regs.Read(REG_ANGLE_Z);
+inline uint8_t regs_get_cmd(void)
+{
+    SVR_reg_t res = 0xFF;
+    SVR_Get(&regs, REG_CMD, &res, false, 0);
+    return (uint8_t)res;
 }
+
+inline uint8_t regs_get_arg(void)
+{
+    SVR_reg_t res = 0xFF;
+    SVR_Get(&regs, REG_ARG, &res, false, 0);
+    return (uint8_t)res;
+}
+
+inline uint8_t regs_get_angle_z(void)
+{
+    SVR_reg_t res = 0xFF;
+    SVR_Get(&regs, REG_ANGLE_Z, &res, false, 0);
+    return (uint8_t)res;
+}
+
+int RegistersInit();
