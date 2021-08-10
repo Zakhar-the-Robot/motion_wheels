@@ -21,9 +21,9 @@
 #define PRINT_REGS 0
 #define PRINT_ANGLES 0
 
-#define ENABLE_BT 1
+#define ENABLE_BT 0
 #define ENABLE_I2C 1
-#define ENABLE_MPU 1
+#define ENABLE_MPU 0
 
 #define BT_DEVICE_NAME "Zakhar the robot"
 #define BT_SPP_SERVER_NAME "SPP_SERVER"

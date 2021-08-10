@@ -77,13 +77,15 @@ static void IRAM_ATTR zk_i2c_isr_handler(void* arg)
     // i2c_obj_t *p_i2c = (i2c_obj_t *) arg;
     // int i2c_num = p_i2c->i2c_num;
     // i2c_intr_event_t evt_type = I2C_INTR_EVENT_ERR;
-    ets_printf("I2c ISR\n\r"); 
     portBASE_TYPE HPTaskAwoken = pdFALSE;
-    // i2c_dev_t* i2c_dev = I2C_LL_GET_HW(I2C_NUM_1);
-    // if (i2c_dev->int_status.trans_start) {
-    //     zk_i2c_start_count += 1;
-    //     i2c_dev->int_clr.trans_start = 1;
-    // }
+    i2c_dev_t* i2c_dev = I2C_LL_GET_HW(I2C_NUM_1);
+    // ets_printf("I2c ISR 0x%08x\n\r", i2c_dev->int_status.val); 
+    if (i2c_dev->int_raw.trans_start) {
+        ets_printf("I2c ISR trans_start\n\r"); 
+        zk_i2c_start_count += 1;
+        i2c_dev->int_clr.trans_start = 1;
+
+    }
     // if (i2c_dev->int_status.rx_fifo_full || zk_i2c_start_count) {
     //     uint32_t rx_fifo_cnt = i2c_ll_get_rxfifo_cnt(i2c_dev);
     //     if (zk_i2c_start_count == 1 || rx_fifo_cnt >= 2) { // write to this device
@@ -109,12 +111,25 @@ static void IRAM_ATTR zk_i2c_isr_handler(void* arg)
     //     zk_i2c_reset();
     //     i2c_dev->int_clr.end_detect = 1;
     // }
+    if (i2c_dev->int_raw.rx_fifo_full){
+        ets_printf("I2c ISR rx_fifo_full\n\r"); 
 
-    // // if (i2c_dev->int_status.trans_complete){
-    // //     zk_i2c_reset();
-    // // } else {
-    // //     if (i2c_dev->int_status.trans_start |)
-    // // }
+        i2c_dev->int_clr.rx_fifo_full = 1;
+        i2c_ll_rxfifo_rst(i2c_dev);
+    }
+
+    if (i2c_dev->int_raw.trans_complete){
+        ets_printf("I2c ISR trans_complete\n\r"); 
+        i2c_dev->int_clr.trans_complete = 1;
+        // zk_i2c_reset();
+    }
+    ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+    ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+    ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+    // ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+    // } else {
+    //     if (i2c_dev->int_status.trans_start |)
+    // }
 
     // // if (i2c_dev->int_status.end_detect) {
     // //     uint32_t rx_fifo_cnt = i2c_ll_get_rxfifo_cnt(i2c_dev);
@@ -184,9 +199,16 @@ esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address)
     i2c_ll_disable_intr_mask(i2c_dev, I2C_LL_INTR_MASK);
     i2c_ll_clr_intsts_mask(i2c_dev, I2C_LL_INTR_MASK);
     i2c_isr_register(I2C_NUM_1, zk_i2c_isr_handler, NULL, 0, &intr_handle);
-    i2c_ll_slave_enable_rx_it(i2c_dev);
+    i2c_dev->fifo_conf.nonfifo_rx_thres = 1;
+    // i2c_ll_slave_enable_rx_it(i2c_dev);
+    // Enable interruptions:
+    i2c_dev->int_ena.val |= I2C_TRANS_COMPLETE_INT_ENA_M | 
+                            I2C_TRANS_START_INT_ENA_M | 
+                            I2C_RXFIFO_FULL_INT_ENA_M |
+                            I2C_RX_REC_FULL_INT_ST_M;
+    // i2c_ll_slave_enable_tx_it(i2c_dev);
     // Init all to the initial state
-    zk_i2c_reset();
+    // zk_i2c_reset();
 
     return ESP_OK;
 }
