@@ -79,10 +79,11 @@ static void IRAM_ATTR zk_i2c_isr_handler(void* arg)
     // i2c_intr_event_t evt_type = I2C_INTR_EVENT_ERR;
     portBASE_TYPE HPTaskAwoken = pdFALSE;
     i2c_dev_t* i2c_dev = I2C_LL_GET_HW(I2C_NUM_1);
-    // ets_printf("I2c ISR 0x%08x\n\r", i2c_dev->int_status.val); 
-    if (i2c_dev->int_raw.trans_start) {
+    ets_printf("I2c ISR begin 0x%08x\n\r", i2c_dev->int_status.val); 
+    
+    if (i2c_dev->int_status.trans_start) {
         ets_printf("I2c ISR trans_start\n\r"); 
-        zk_i2c_start_count += 1;
+        // zk_i2c_start_count += 1;
         i2c_dev->int_clr.trans_start = 1;
 
     }
@@ -111,21 +112,86 @@ static void IRAM_ATTR zk_i2c_isr_handler(void* arg)
     //     zk_i2c_reset();
     //     i2c_dev->int_clr.end_detect = 1;
     // }
+    if (i2c_dev->int_status.ack_err){
+        ets_printf("I2c ISR ack_err\n\r"); 
+        i2c_dev->int_clr.ack_err = 1;
+    }
+
+    if (i2c_dev->int_status.arbitration_lost){
+        ets_printf("I2c ISR arbitration_lost\n\r"); 
+        i2c_dev->int_clr.arbitration_lost = 1;
+    }
+
     if (i2c_dev->int_raw.rx_fifo_full){
         ets_printf("I2c ISR rx_fifo_full\n\r"); 
-
         i2c_dev->int_clr.rx_fifo_full = 1;
         i2c_ll_rxfifo_rst(i2c_dev);
     }
 
-    if (i2c_dev->int_raw.trans_complete){
-        ets_printf("I2c ISR trans_complete\n\r"); 
+    if (i2c_dev->int_raw.trans_complete) {
+        // ets_printf("I2c ISR trans_complete\n\r");
+        ets_printf("I2c ISR trans_complete (rx_fifo_cnt: 0x%04x)\n\r", i2c_dev->status_reg.rx_fifo_cnt);
+        if (i2c_dev->int_raw.rx_rec_full) {
+            ets_printf("I2c ISR rx_rec_full (rx_fifo_cnt: 0x%04x)\n\r", i2c_dev->status_reg.rx_fifo_cnt);
+
+            zk_i2c_reg = i2c_dev->fifo_data.data;
+            ets_printf("I2C zk_i2c_reg 0x%04x\n\r", zk_i2c_reg);
+            i2c_dev->fifo_data.data = zk_i2c_reg;
+
+            if (i2c_dev->status_reg.rx_fifo_cnt == 1) {
+                zk_i2c_reg_val_rcv = i2c_dev->fifo_data.data;
+                ets_printf("I2C zk_i2c_reg_val_rcv 0x%04x\n\r", zk_i2c_reg_val_rcv);
+            } else if (!i2c_dev->status_reg.rx_fifo_cnt) {
+                ets_printf("I2C read! Put data to tx here\n\r");
+            } else {
+                ets_printf("[error] I2C fifo extra bytes! %d\n\r", i2c_dev->status_reg.rx_fifo_cnt);
+                i2c_ll_rxfifo_rst(i2c_dev);
+            }
+            i2c_dev->int_clr.rx_rec_full = 1;
+        }
+
         i2c_dev->int_clr.trans_complete = 1;
         // zk_i2c_reset();
     }
-    ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
-    ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
-    ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+
+    if (i2c_dev->int_raw.slave_tran_comp){
+        // ets_printf("I2c ISR slave_tran_comp\n\r"); 
+        ets_printf("I2c ISR slave_tran_comp (rx_fifo_cnt: 0x%04x)\n\r", i2c_dev->status_reg.rx_fifo_cnt); 
+        if (i2c_dev->int_raw.rx_rec_full) {
+            ets_printf("I2c ISR rx_rec_full (rx_fifo_cnt: 0x%04x)\n\r", i2c_dev->status_reg.rx_fifo_cnt);
+            
+            zk_i2c_reg = i2c_dev->fifo_data.data;
+            ets_printf("I2C zk_i2c_reg 0x%04x\n\r", zk_i2c_reg);
+            ets_printf("I2c ISR rx_rec_full (rx_fifo_cnt: 0x%04x)\n\r", i2c_dev->status_reg.rx_fifo_cnt);
+
+            i2c_dev->fifo_data.data = zk_i2c_reg;
+            if (i2c_dev->status_reg.rx_fifo_cnt){
+                zk_i2c_reg_val_rcv = i2c_dev->fifo_data.data;
+                ets_printf("I2C zk_i2c_reg_val_rcv 0x%04x\n\r", zk_i2c_reg_val_rcv);
+            } else {
+                uint32_t i = rand();
+                i2c_dev->fifo_data.data = i;
+                ets_printf("I2C send 0x%04x\n\r", i);
+                // i2c_ll_rxfifo_rst(i2c_dev);
+            }
+
+            // if (i2c_dev->status_reg.rx_fifo_cnt == 1) {
+            //     zk_i2c_reg_val_rcv = i2c_dev->fifo_data.data;
+            //     ets_printf("I2C zk_i2c_reg_val_rcv 0x%04x\n\r", zk_i2c_reg_val_rcv);
+            // } else if (!i2c_dev->status_reg.rx_fifo_cnt) {
+            //     ets_printf("I2C read! Put data to tx here\n\r");
+            // } else {
+            //     ets_printf("[error] I2C fifo extra bytes! %d\n\r", i2c_dev->status_reg.rx_fifo_cnt);
+            //     // i2c_ll_rxfifo_rst(i2c_dev);
+            // }
+            i2c_dev->int_clr.rx_rec_full = 1;
+        }
+        i2c_dev->int_clr.slave_tran_comp = 1;
+        // zk_i2c_reset();
+    }
+    // ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+    // ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
+    // ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
     // ets_printf("I2C fifo 0x%08x\n\r", i2c_dev->fifo_data.data);
     // } else {
     //     if (i2c_dev->int_status.trans_start |)
@@ -149,6 +215,8 @@ static void IRAM_ATTR zk_i2c_isr_handler(void* arg)
     //     //     i2c_hal_slave_clr_tx_it(&(i2c_context[i2c_num].hal));
     // // }
     //We only need to check here if there is a high-priority task needs to be switched.
+    ets_printf("I2c ISR end 0x%08x\n\r\n\r", i2c_dev->int_status.val); 
+
     if (HPTaskAwoken == pdTRUE) {
         portYIELD_FROM_ISR();
     }
@@ -200,12 +268,30 @@ esp_err_t i2c_slave_init(gpio_num_t sda, gpio_num_t scl, uint8_t address)
     i2c_ll_clr_intsts_mask(i2c_dev, I2C_LL_INTR_MASK);
     i2c_isr_register(I2C_NUM_1, zk_i2c_isr_handler, NULL, 0, &intr_handle);
     i2c_dev->fifo_conf.nonfifo_rx_thres = 1;
+    // i2c_dev->scl_start_hold.time = 0x1;
+    // i2c_dev->scl_rstart_setup.time = 0x1;
     // i2c_ll_slave_enable_rx_it(i2c_dev);
     // Enable interruptions:
-    i2c_dev->int_ena.val |= I2C_TRANS_COMPLETE_INT_ENA_M | 
-                            I2C_TRANS_START_INT_ENA_M | 
-                            I2C_RXFIFO_FULL_INT_ENA_M |
-                            I2C_RX_REC_FULL_INT_ST_M;
+    // i2c_dev->int_ena.val = I2C_TRANS_COMPLETE_INT_ENA_M | 
+    //                         I2C_TRANS_START_INT_ENA_M | 
+    //                         I2C_RXFIFO_FULL_INT_ENA_M |
+    //                         I2C_RX_REC_FULL_INT_ST_M;
+
+    i2c_dev->int_ena.val = 0;
+    i2c_dev->int_ena.ack_err = 1;
+    // i2c_dev->int_ena.arbitration_lost = 1;
+    // i2c_dev->int_ena.end_detect = 1;
+    // i2c_dev->int_ena.master_tran_comp = 1;
+    i2c_dev->int_ena.rx_fifo_full = 1;
+    i2c_dev->int_ena.rx_fifo_ovf = 1;
+    i2c_dev->int_ena.rx_rec_full = 1;
+    i2c_dev->int_ena.slave_tran_comp = 1;
+    i2c_dev->int_ena.time_out = 1;
+    // i2c_dev->int_ena.trans_complete = 1;
+    i2c_dev->int_ena.trans_start = 1;
+    // i2c_dev->int_ena.tx_fifo_empty = 1;
+    // i2c_dev->int_ena.tx_send_empty = 1;
+
     // i2c_ll_slave_enable_tx_it(i2c_dev);
     // Init all to the initial state
     // zk_i2c_reset();
