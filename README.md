@@ -1,23 +1,13 @@
-# zakhar_platform
+# Zakhar the Robot: Motors
 
-Controlled from I2C and UART moving platform for Zakhar. Equipped by led indication and an MPU module (GY-91).
+[![Main - Page](https://img.shields.io/badge/Project-Zakhar%20the%20Robot-blue)](https://zakhar-the-robot.github.io/doc "See the project on Github") [![View - Documentation](https://img.shields.io/badge/Documentation-orange)](https://zakhar-the-robot.github.io/doc/docs/parts/motors "Go to Documentation")
 
-Part of the [Zakhar: A robotics UX project](https://github.com/an-dr/zakhar)
+Moving platform for Zakhar. Equipped by led indication and an MPU module (GY-91).
+## Copyrights
 
-## Schematic
+Copyright (c) 2022 Andrei Gramakov. All rights reserved.
 
-Power:
+This work is licensed under the terms of the GPLv3 license. For a copy, see: [LICENSE](LICENSE)
 
-<img src="assets/schematic/power-Power.svg" alt="platform_schematic" width="500">
-
-Platform:
-
-<img src="assets/schematic/platform.svg" alt="platform_schematic" width="800">
-
-## Startup process
-
-1. Blink by red and green leds
-2. Red led
-3. Motors test: forward, left, right
-4. Software initialization
-5. If no error detected - green led
+- site:    https://agramakov.me
+- e-mail:  mail@agramakov.me
