@@ -1,6 +1,6 @@
 # Zakhar the Robot: Motors
 
-[![Main - Page](https://img.shields.io/badge/Project-Zakhar%20the%20Robot-blue)](https://zakhar-the-robot.github.io/doc "See the project on Github") [![View - Documentation](https://img.shields.io/badge/Documentation-orange)](https://zakhar-the-robot.github.io/doc/docs/parts/motors "Go to Documentation")
+[![Main - Page](https://img.shields.io/badge/Project-Zakhar%20the%20Robot-blue)](https://zakhar-the-robot.github.io/doc "See the project on Github") [![View - Documentation](https://img.shields.io/badge/Documentation-orange)](https://zakhar-the-robot.github.io/doc/docs/gears/motors "Go to Documentation")
 
 Moving platform for Zakhar. Equipped by led indication and an MPU module (GY-91).
 ## Copyrights

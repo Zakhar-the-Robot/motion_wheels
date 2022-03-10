@@ -10,11 +10,11 @@ Moving platform for Zakhar. Equipped by led indication and an MPU module (GY-91)
 
 Power:
 
-<img src="_index_power.svg" alt="platform_schematic" width="500">
+<img src="index_power.svg" alt="platform_schematic" width="500">
 
 Platform:
 
-<img src="_index_platform.svg" alt="platform_schematic" width="800">
+<img src="index_platform.svg" alt="platform_schematic" width="800">
 
 ## Startup Sequence
 
