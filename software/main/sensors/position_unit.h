@@ -22,7 +22,7 @@ extern "C" {
 esp_err_t start_mpu(void);
 void mpu_centralize_angles(void);
 void mpu_reset(void);
-void convert_angle_2_sign_and_angle(float val, uint8_t* reg_s_p, uint8_t* reg_val_p);
+void convert_angle_2_sign_and_angle(float val, uint8_t* sign_buf_p, uint8_t* val_buf_p);
 
 #ifdef __cplusplus
 }

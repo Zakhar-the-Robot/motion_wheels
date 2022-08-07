@@ -22,9 +22,9 @@
 #include "sdkconfig.h"
 #include "soc/mcpwm_periph.h"
 
-#include "SharedVirtualRegisters.hpp"
-
+// Communication
 #include "bluetooth_serial.hpp"
+#include "can.hpp"
 #include "config.h"
 #include "controlcallback.h"
 #include "indication.hpp"
@@ -46,7 +46,7 @@ LOG_SET_TAG("main");
         }                                                \
     } while (0)
 
-static void logging_loop()
+inline void logging_loop()
 {
 #if PRINT_REGS
     while (1) {
@@ -67,32 +67,36 @@ static void logging_loop()
 
 extern "C" void app_main()
 {
-    esp_log_level_set("*", ESP_LOG_INFO);
+    esp_log_level_set("CAN", ESP_LOG_DEBUG);
+    esp_log_level_set("ctrl", ESP_LOG_DEBUG);
     LOG_INFO("Start!");
-    bool successfull_boot = true;
+    bool successfull_boot = true;  // TODO: Move this variable and CHECK_LOAD_STAGE to an indicator object
     CHECK_LOAD_STAGE(init_indication(), "Indication");
     led_red(); // boot is started
 
-#if ENABLE_MPU
-    /* Each MPU angle is represented as [SIGN : INT_VALUE]
-       Values for Z-rotation (parallel to floor):
-       [ 0 : 0...180] rotation clockwise for
-       [ 1 : 0...179] rotation counter-clockwise
-    */
+    RegistersInit(); // TODO #8 check the initialization of registers
+    
+#if ENABLE_POSITION_UNIT
     CHECK_LOAD_STAGE(start_mpu(), "MPU");
-#endif // ENABLE_MPU
+#endif // ENABLE_POSITION_UNIT
 
 #if ENABLE_I2C
     CHECK_LOAD_STAGE(start_i2c_slave(), "I2C");
 #endif // ENABLE_I2C
 
+
     CHECK_LOAD_STAGE(start_motors(), "Motors");
     CHECK_LOAD_STAGE(start_serial(), "Serial control");
     CHECK_LOAD_STAGE(start_control(), "Control system");
 
-#if ENABLE_BT
+#if ENABLE_BLUETOOTH_SERIAL
     CHECK_LOAD_STAGE(start_bt_serial(), "Bluetooth");
-#endif // ENABLE_BT
+#endif // ENABLE_BLUETOOTH_SERIAL
+
+
+#if ENABLE_CAN
+    CHECK_LOAD_STAGE(start_can(), "CAN");
+#endif // ENABLE_CAN
 
     if (successfull_boot) {
         led_green(); // boot is done with no errors

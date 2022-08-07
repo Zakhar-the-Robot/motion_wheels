@@ -16,3 +16,6 @@
 [submodule "software/test/stubs/log.cx"]
 	path = software/test/stubs/log.cx
 	url = https://github.com/an-dr/log.cx.git
+[submodule "software/components/lib_espidf_canbus"]
+	path = software/components/lib_espidf_canbus
+	url = https://github.com/Zakhar-the-Robot/lib_espidf_canbus.git

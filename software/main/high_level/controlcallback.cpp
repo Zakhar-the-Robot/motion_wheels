@@ -36,9 +36,9 @@ static Connection_t connection[] = {
     {.cmd_code = CMD_SPEED2,            .func = S2              },
     {.cmd_code = CMD_SPEED3,            .func = SMAX            },
     {.cmd_code = CMD_SET_ARG_TO_30,     .func = set_arg_to_30   },
-#if ENABLE_MPU
+#if ENABLE_POSITION_UNIT
     {.cmd_code = CMD_MPU_CALIBRATE,     .func = mpu_reset       },
-#endif // ENABLE_MPU
+#endif // ENABLE_POSITION_UNIT
 
 };
 

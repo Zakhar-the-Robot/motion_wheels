@@ -12,4 +12,16 @@
 
 #pragma once
 
-esp_err_t start_bt_serial(void);
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "esp_err.h"
+
+extern uint8_t can_data_storage[8];
+esp_err_t start_can();
+
+#ifdef __cplusplus
+}
+#endif
