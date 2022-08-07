@@ -23,14 +23,14 @@
 #include "registers.hpp"
 #include "zk_i2c.h"
 
-#if ENABLE_MPU
+#if ENABLE_POSITION_UNIT
 
 LOG_SET_TAG("mpu");
 
 #define KFIFOPACKETSIZE 12
 static constexpr mpud::gyro_fs_t kGyroFS = mpud::GYRO_FS_500DPS;
 
-// TODO: pack
+// TODO: #9 Pack MPU static variables in an object
 static MPU_t MPU; // a default MPU object
 static mpud::raw_axes_t accelRaw; // x, y, z axes as int16
 static mpud::raw_axes_t gyroRaw; // x, y, z axes as int16
@@ -80,7 +80,7 @@ static void angles_upd(uint32_t ms_from_last_measure, mpud::float_axes_t* old_an
     }
 }
 
-void convert_angle_2_sign_and_angle(float val, uint8_t* reg_s_p, uint8_t* reg_val_p)
+void convert_angle_2_sign_and_angle(float val, uint8_t* sign_buf_p, uint8_t* val_buf_p)
 {
     uint8_t reg_val;
     bool reg_s;
@@ -98,16 +98,23 @@ void convert_angle_2_sign_and_angle(float val, uint8_t* reg_s_p, uint8_t* reg_va
     } else {
         reg_val = val_int;
     }
-    *reg_s_p = (uint8_t)reg_s;
-    *reg_val_p = (uint8_t)reg_val;
+    *sign_buf_p = (uint8_t)reg_s;
+    *val_buf_p = (uint8_t)reg_val;
 }
 
 static void load_angles_to_regs(mpud::float_axes_t* angles)
 {
-    uint8_t* r_p = regs.GetRegs();
-    convert_angle_2_sign_and_angle(angles->x, &r_p[REG_ANGLE_X_SIGN], &r_p[REG_ANGLE_X]);
-    convert_angle_2_sign_and_angle(angles->y, &r_p[REG_ANGLE_Y_SIGN], &r_p[REG_ANGLE_Y]);
-    convert_angle_2_sign_and_angle(angles->z, &r_p[REG_ANGLE_Z_SIGN], &r_p[REG_ANGLE_Z]);
+    uint8_t sign = 0xFF;
+    uint8_t val = 0xFF;
+    convert_angle_2_sign_and_angle(angles->x, &sign, &val);
+    SVR_Set(&regs, REG_ANGLE_X_SIGN, sign, false, 0);
+    SVR_Set(&regs, REG_ANGLE_X, val, false, 0);
+    convert_angle_2_sign_and_angle(angles->y, &sign, &val);
+    SVR_Set(&regs, REG_ANGLE_Y_SIGN, sign, false, 0);
+    SVR_Set(&regs, REG_ANGLE_Y, val, false, 0);
+    convert_angle_2_sign_and_angle(angles->z,&sign, &val);
+    SVR_Set(&regs, REG_ANGLE_Z_SIGN, sign, false, 0);
+    SVR_Set(&regs, REG_ANGLE_Z, val, false, 0);
 }
 
 static void process_gyro_data(void)
@@ -132,6 +139,11 @@ static void mpu_task(void*)
     }
 }
 
+/* Each MPU angle is represented as [SIGN : INT_VALUE]
+    Values for Z-rotation (parallel to floor):
+    [ 0 : 0...180] rotation clockwise for
+    [ 1 : 0...179] rotation counter-clockwise
+*/
 esp_err_t start_mpu(void)
 {
 
@@ -182,4 +194,4 @@ esp_err_t start_mpu(void)
     return ESP_OK;
 }
 
-#endif // ENABLE_MPU
+#endif // ENABLE_POSITION_UNIT

@@ -114,15 +114,15 @@ esp_err_t start_motors(void)
 #if MOTORS_GREETING
 
     motors_esp32.Forward(255);
-    delay(300);
+    delay(300*MOTORS_GREETING_LENGTH);
     motors_esp32.Stop(100);
 
     motors_esp32.Left(120);
-    delay(300);
+    delay(300*MOTORS_GREETING_LENGTH);
     motors_esp32.Stop(100);
 
     motors_esp32.Right(120);
-    delay(300);
+    delay(300*MOTORS_GREETING_LENGTH);
     motors_esp32.Stop();
 #endif //MOTORS_GREETING
 

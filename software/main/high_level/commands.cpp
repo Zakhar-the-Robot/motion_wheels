@@ -70,7 +70,7 @@ void Stop(void)
     motor_ctrl.Cmd(MotorCmd_Stop);
 }
 
-#if ENABLE_MPU
+#if ENABLE_POSITION_UNIT
 static void precise_position(uint8_t current_angle, uint8_t target_angle, bool current_sign)
 {
     int delta = abs(current_angle - target_angle);
@@ -139,28 +139,28 @@ static void set_position(MotorControllerCmd_t rot_direction, int delta_angle)
     ets_printf("Target: 0x%x:0x%x\n", target_sign, target_angle);
     set_position_do(rot_direction, (bool)target_sign, target_angle);
 }
-#endif // ENABLE_MPU 
+#endif // ENABLE_POSITION_UNIT 
 
 void A(void)
 {
     LOG_INFO("%s",__func__);
     motor_ctrl.Cmd(MotorCmd_Left);
-#if ENABLE_MPU
+#if ENABLE_POSITION_UNIT
     if (regs_get_arg()) {
         set_position(MotorCmd_Left, regs_get_arg());
     }
-#endif // ENABLE_MPU
+#endif // ENABLE_POSITION_UNIT
 }
 
 void D(void)
 {
     LOG_INFO("%s",__func__);
     motor_ctrl.Cmd(MotorCmd_Right);
-#if ENABLE_MPU
+#if ENABLE_POSITION_UNIT
     if (regs_get_arg()) {
         set_position(MotorCmd_Right, regs_get_arg());
     }
-#endif // ENABLE_MPU
+#endif // ENABLE_POSITION_UNIT
 }
 
 void set_arg_to_30(void){

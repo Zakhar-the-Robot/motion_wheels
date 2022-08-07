@@ -1,55 +1,40 @@
-# # Sources
-# file(GLOB_RECURSE srcs_c "*.c")
-# list(APPEND srcs  ${srcs_c})
 
-# file(GLOB_RECURSE srcs_cpp "*.cpp")
-# list(APPEND srcs  ${srcs_cpp})
 
+idf_component_get_property(freertos_component_dir freertos COMPONENT_DIR)
 
 # Sources
-set(srcs
-            "main.cpp"
-            "src/drivers/indication.cpp"
-            "src/drivers/motors_on_esp32.cpp"
-            "src/high_level/commands.cpp"
-            "src/high_level/controlcallback.cpp"
-            "src/high_level/registers.cpp"
-            "src/port/delay.c"
-            "src/port/millis.c"
-            "src/subsystems_hw/bluetooth_serial.cpp"
-            "src/subsystems_hw/motor_controller.cpp"
-            "src/subsystems_hw/position_unit.cpp"
-            "src/subsystems_hw/serial.cpp"
-            "src/subsystems_hw/zk_i2c.cpp"
-            )
+file (GLOB SRC_HIGH_LEVEL "high_level/*.c" "high_level/*.cpp")
+file (GLOB SRC_PORT "port/*.c" "port/*.cpp")
+file (GLOB SRC_COMMUNICATION "communication/*.c" "communication/*.cpp")
+file (GLOB SRC_INDICATION "indication/*.c" "indication/*.cpp")
+file (GLOB SRC_SENSORS "sensors/*.c" "sensors/*.cpp")
+file (GLOB SRC_MOTION "motion/*.c" "motion/*.cpp")
+set (SRC_SVR         "../components/SharedVirtualRegisters/src/SharedVirtualRegisters.c"
+                     "../components/SharedVirtualRegisters/src/svr_mux_freertos.c"
+                     "../components/SharedVirtualRegisters/src/svr_mux_noos.c")
 
+set(srcs "main.cpp"
+         ${SRC_SVR}
+         ${SRC_COMMUNICATION}
+         ${SRC_HIGH_LEVEL}
+         ${SRC_INDICATION}
+         ${SRC_MOTION}
+         ${SRC_PORT}
+         ${SRC_SENSORS}
+    )
 
 # Includes
 set(includes    "."
-                "include"
-                "include/drivers"
-                "include/high_level"
-                "include/port"
-                "include/subsystems_hw")
-
-
-
-#  Print
-#  *********************************************************************
-message("*******************************************************************************")
-message("Project's info")
-
-message("-- Sources")
-foreach(el IN LISTS srcs)
-message(" ${el}")
-endforeach()
-
-message("-- Includes")
-foreach(el IN LISTS includes)
-message(" ${el}")
-endforeach()
-message("*******************************************************************************")
-# ********************************************************************** Print
+                "communication"
+                "indication"
+                "high_level"
+                "port"
+                "motion"
+                "sensors"
+                "${freertos_component_dir}/include/freertos"
+                "../components/SharedVirtualRegisters/include")
 
 idf_component_register( SRCS ${srcs}
                         INCLUDE_DIRS ${includes})
+
+target_compile_definitions(${COMPONENT_TARGET} PRIVATE "-DSVR_CFG_OS=SVR_OS_FREERTOS")

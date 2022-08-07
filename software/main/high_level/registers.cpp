@@ -12,4 +12,10 @@
 
 #include "registers.hpp"
 
-SharedVirtualRegisters regs(32);
+SharedVirtualRegisters_t regs;
+
+
+int RegistersInit(){
+    SVR_Init(&regs, REGS_AMOUNT);
+    return 0;
+}

@@ -1,47 +1,25 @@
 {
-  "C_Cpp.clang_format_style": "file",
-  "editor.formatOnSave": false,
-  "[cpp]": {
-    "editor.defaultFormatter": "ms-vscode.cpptools",
-    "editor.quickSuggestions": true
-  },
-  "[c]": {
-    "editor.defaultFormatter": "ms-vscode.cpptools",
-    "editor.quickSuggestions": true
-  },
-  "C_Cpp.intelliSenseEngineFallback": "Enabled",
-  "files.associations": {
-    "*.html": "html",
-    "*.inc": "innopascal",
-    "*.log": "log",
-    "*.rst": "restructuredtext",
-    "esp_system.h": "c",
-    "task.h": "c",
-    "motors.h": "c",
-    "esp_err.h": "c",
-    "xmemory": "cpp",
-    "optional": "cpp",
-    "istream": "cpp",
-    "ostream": "cpp",
-    "ratio": "cpp",
-    "system_error": "cpp",
-    "array": "cpp",
-    "functional": "cpp",
-    "tuple": "cpp",
-    "type_traits": "cpp",
-    "utility": "cpp",
-    "xlocmon": "cpp",
-    "xtr1common": "cpp",
-    "string": "cpp",
-    "string_view": "cpp",
-    "vector": "cpp",
-    "xstring": "cpp",
-    "xutility": "cpp",
-    "*.ipp": "cpp",
-    "esp_bt_main.h": "c",
-    "esp_bt.h": "c",
-    "cstring": "cpp",
-    "cstdlib": "cpp"
-  },
-  "C_Cpp.dimInactiveRegions": true
+    "C_Cpp.clang_format_style": "file",
+    "editor.formatOnSave": false,
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        }
+    },
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        }
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.dimInactiveRegions": false,
+    "idf.flashType": "UART",
+    "idf.adapterTargetName": "esp32",
+    "idf.portWin": "COM4"
 }

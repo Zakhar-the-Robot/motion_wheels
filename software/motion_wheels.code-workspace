@@ -42,7 +42,15 @@
             "mcpwm_reg.h": "c",
             "mcpwm_struct.h": "c",
             "esp_timer.h": "c",
-            "delay.h": "c"
+            "delay.h": "c",
+            "registers.hpp": "c",
+            "svr_types.h": "c",
+            "sharedvirtualregisters.h": "c",
+            "xiosbase": "c",
+            "cmath": "cpp",
+            "macros.h": "c",
+            "config.h": "c",
+            "periph_ctrl.h": "c"
         },
         "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
         "terminal.integrated.profiles.windows": {
@@ -51,7 +59,7 @@
               "args": ["-NoProfile",
                        "-NoExit",
                        "-c",
-                       "'. $env:IDF_PATH/export.ps1'"
+                       ". $env:IDF_PATH\\export.ps1"
                         ]
             }
           },
@@ -62,5 +70,38 @@
             "espressif.esp-idf-extension",
             "github.vscode-pull-request-github"
         ],
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Wheels - Build",
+                "type": "shell",
+                "command": "pwsh",
+                "args": [ "-c", ". ${env:IDF_PATH}/export.ps1; & idf.py build" ],
+                "presentation": {
+                    "group": "build"
+                },         
+            },
+            {
+                "label": "Wheels - Flash",
+                "type": "shell",
+                "command": "pwsh",
+                "args": [ "-c", ". ${env:IDF_PATH}/export.ps1; & idf.py flash monitor" ],
+                "presentation": {
+                    "group": "flash"
+                }
+            },
+            
+            {
+                "label": "Wheels - Monitor",
+                "type": "shell",
+                "command": "pwsh",
+                "args": [ "-c", ". ${env:IDF_PATH}/export.ps1; & idf.py monitor" ],
+                "presentation": {
+                    "group": "monitor"
+                }
+            }
+        ]
     }
 }

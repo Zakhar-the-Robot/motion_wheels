@@ -33,8 +33,7 @@
 #include "config.h"
 #include "macros.h"
 #include "registers.hpp"
-
-#if ENABLE_BT
+#include "bluetooth_serial.hpp"
 
 LOG_SET_TAG("bt_serial");
 
@@ -227,5 +226,3 @@ esp_err_t start_bt_serial(void)
     esp_bt_gap_set_pin(pin_type, 0, pin_code);
     return ESP_OK;
 }
-
-#endif // ENABLE_BT
