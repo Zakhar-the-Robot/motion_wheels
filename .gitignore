@@ -41,3 +41,4 @@ _autosave-*
 
 # CMake temp
 **/cmake-build-debug/**
+/schematic/platform/platform-backups

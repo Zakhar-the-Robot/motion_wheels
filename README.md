@@ -8,7 +8,7 @@ Part of the [Zakhar: A robotics UX project](https://github.com/an-dr/zakhar)
 
 Power:
 
-<img src="assets/schematic/power-Power.svg" alt="platform_schematic" width="500">
+<img src="assets/schematic/platform-Power.svg" alt="platform_schematic" width="500">
 
 Platform:
 
