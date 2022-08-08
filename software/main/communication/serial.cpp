@@ -23,7 +23,7 @@
 
 LOG_SET_TAG("serial");
 
-static void serial_task(void*)
+static void serial_task(void *)
 {
     // Configure a temporary buffer for the incoming data
     uint8_t ch;

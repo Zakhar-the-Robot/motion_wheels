@@ -14,5 +14,5 @@
 
 #include "esp_err.h"
 
-void serial_poll(void);
+void      serial_poll(void);
 esp_err_t start_serial(void);

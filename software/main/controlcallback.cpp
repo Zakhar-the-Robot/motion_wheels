@@ -19,11 +19,12 @@
 #include "config.h"
 #include "controlcallback.h"
 #include "macros.h"
-#include "sensors/position_unit.hpp"
 #include "registers.hpp"
+#include "sensors/position_unit.hpp"
 
 LOG_SET_TAG("ctrl");
 
+// clang-format off
 static Connection_t connection[] = {
     {.cmd_code = CMD_FORWARD,           .func = W               },
     {.cmd_code = CMD_BACKWARD,          .func = S               },
@@ -39,8 +40,8 @@ static Connection_t connection[] = {
 #if ENABLE_POSITION_UNIT
     {.cmd_code = CMD_MPU_CALIBRATE,     .func = mpu_reset       },
 #endif // ENABLE_POSITION_UNIT
-
 };
+// clang-format on
 
 ControlCallbacks Cc(connection, SIZE_ARR(connection));
 
@@ -51,10 +52,8 @@ void control_poll(void *)
         if ((new_cmd != (CMD_NONE & 0xFF)) & (new_cmd != CMD_DONE)) {
             LOG_DEBUG("New Command: 0x%x", new_cmd);
             Cc.Exec(new_cmd);
-            REGW(REG_CMD,CMD_DONE);
-            if (new_cmd != CMD_SET_ARG_TO_30){
-                REGW(REG_ARG,0);
-            }
+            REGW(REG_CMD, CMD_DONE);
+            if (new_cmd != CMD_SET_ARG_TO_30) { REGW(REG_ARG, 0); }
         }
         vTaskDelay(1);
     }

@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 extern ControlCallbacks Cc;
-esp_err_t start_control(void);
+esp_err_t               start_control(void);
 
 #ifdef __cplusplus
 }

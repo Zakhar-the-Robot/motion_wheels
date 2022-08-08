@@ -15,7 +15,8 @@
 SharedVirtualRegisters_t regs;
 
 
-int RegistersInit(){
+int RegistersInit()
+{
     SVR_Init(&regs, REGS_AMOUNT);
     return 0;
 }

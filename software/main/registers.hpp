@@ -35,33 +35,30 @@ inline uint8_t REGR(uint8_t n)
 {
     SVR_reg_t res = 0xFF;
     SVR_Get(&regs, n, &res, false, 0);
-    return (uint8_t)res;
+    return (uint8_t) res;
 }
 
-inline void REGW(uint8_t n, uint8_t v)
-{
-    SVR_Set(&regs, n, v, false, 0);
-}
+inline void REGW(uint8_t n, uint8_t v) { SVR_Set(&regs, n, v, false, 0); }
 
 inline uint8_t regs_get_cmd(void)
 {
     SVR_reg_t res = 0xFF;
     SVR_Get(&regs, REG_CMD, &res, false, 0);
-    return (uint8_t)res;
+    return (uint8_t) res;
 }
 
 inline uint8_t regs_get_arg(void)
 {
     SVR_reg_t res = 0xFF;
     SVR_Get(&regs, REG_ARG, &res, false, 0);
-    return (uint8_t)res;
+    return (uint8_t) res;
 }
 
 inline uint8_t regs_get_angle_z(void)
 {
     SVR_reg_t res = 0xFF;
     SVR_Get(&regs, REG_ANGLE_Z, &res, false, 0);
-    return (uint8_t)res;
+    return (uint8_t) res;
 }
 
 int RegistersInit();

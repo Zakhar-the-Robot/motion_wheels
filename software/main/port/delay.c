@@ -15,7 +15,4 @@
 
 #include "delay.h"
 
-void delay(unsigned ms)
-{
-    vTaskDelay(ms / portTICK_PERIOD_MS);
-}
+void delay(unsigned ms) { vTaskDelay(ms / portTICK_PERIOD_MS); }

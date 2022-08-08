@@ -20,7 +20,7 @@ extern "C" {
 #include "esp_err.h"
 
 extern uint8_t can_data_storage[8];
-esp_err_t start_can();
+esp_err_t      start_can();
 
 #ifdef __cplusplus
 }
