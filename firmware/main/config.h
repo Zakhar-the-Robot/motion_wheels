@@ -13,10 +13,10 @@
 #pragma once
 
 #include "hal/gpio_types.h"
+// clang-format off
 
 /* Config
    ********************************************************************* */
-
 #define DEBUG 1
 #define PRINT_REGS 0
 #define PRINT_ANGLES 0
