@@ -1,3 +1,14 @@
+// *************************************************************************
+//
+// Copyright (c) 2022 Andrei Gramakov. All rights reserved.
+//
+// This file is licensed under the terms of the MIT license.
+// For a copy, see: https://opensource.org/licenses/MIT
+//
+// site:    https://agramakov.me
+// e-mail:  mail@agramakov.me
+//
+// *************************************************************************
 
 #include <stdint.h>
 #include <stdio.h>
@@ -21,7 +32,6 @@
 #include "macros.h"
 #include "position_unit.h"
 #include "registers.hpp"
-#include "zk_i2c.h"
 
 #if ENABLE_POSITION_UNIT
 
@@ -139,6 +149,22 @@ static void mpu_task(void*)
     }
 }
 
+static esp_err_t i2c_master_init()
+{
+    LOG_INFO("Master init");
+    i2c_config_t conf;
+    conf.mode = I2C_MODE_MASTER;
+    conf.sda_io_num = PIN_MPU_I2C_SDA;
+    conf.scl_io_num = PIN_MPU_I2C_SCL;
+    conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
+    conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
+    conf.master.clk_speed = MPU_I2C_CLOCK_FREQ_HZ;
+    conf.clk_flags = 0;
+    ESP_RETURN_ERROR(i2c_param_config(I2C_NUM_0, &conf));
+    ESP_RETURN_ERROR(i2c_driver_install(I2C_NUM_0, conf.mode, 0, 0, 0));
+    return ESP_OK;
+}
+
 /* Each MPU angle is represented as [SIGN : INT_VALUE]
     Values for Z-rotation (parallel to floor):
     [ 0 : 0...180] rotation clockwise for
@@ -147,7 +173,7 @@ static void mpu_task(void*)
 esp_err_t start_mpu(void)
 {
 
-    ESP_RETURN_ERROR(i2c_master_init(PIN_MPU_I2C_SDA, PIN_MPU_I2C_SCL, MPU_I2C_CLOCK_FREQ_HZ));
+    ESP_RETURN_ERROR(i2c_master_init());
 
     MPU.setBus(i2c0); // set bus port, not really needed since default is i2c0
     MPU.setAddr(mpud::MPU_I2CADDRESS_AD0_LOW); // set address, default is AD0_LOW

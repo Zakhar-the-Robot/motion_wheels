@@ -2,7 +2,11 @@
 	"folders": [
 		{
 			"path": "."
-		}
+		},
+        {
+            "path": "..",
+            "name": "Repository"
+        }
 	],
 	"settings": {
 		"files.associations": {
@@ -79,6 +83,15 @@
                 "type": "shell",
                 "command": "pwsh",
                 "args": [ "-c", ". ${env:IDF_PATH}/export.ps1; & idf.py build" ],
+                "presentation": {
+                    "group": "build"
+                },         
+            },
+            {
+                "label": "Wheels - Clean",
+                "type": "shell",
+                "command": "pwsh",
+                "args": [ "-c", ". ${env:IDF_PATH}/export.ps1; & idf.py clean" ],
                 "presentation": {
                     "group": "build"
                 },         

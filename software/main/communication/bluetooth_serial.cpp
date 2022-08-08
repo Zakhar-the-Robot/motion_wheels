@@ -1,8 +1,8 @@
 // *************************************************************************
 //
-// Copyright (c) 2021 Andrei Gramakov. All rights reserved.
+// Copyright (c) 2022 Andrei Gramakov. All rights reserved.
 //
-// This file is licensed under the terms of the MIT license.  
+// This file is licensed under the terms of the MIT license.
 // For a copy, see: https://opensource.org/licenses/MIT
 //
 // site:    https://agramakov.me
@@ -39,23 +39,23 @@ LOG_SET_TAG("bt_serial");
 
 static const esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
 
-static struct timeval time_new, time_old;
-static long data_num = 0;
-
 static const esp_spp_sec_t sec_mask = ESP_SPP_SEC_AUTHENTICATE;
 static const esp_spp_role_t role_slave = ESP_SPP_ROLE_SLAVE;
 
-static void print_speed(void)
-{
-    float time_old_s = time_old.tv_sec + time_old.tv_usec / 1000000.0;
-    float time_new_s = time_new.tv_sec + time_new.tv_usec / 1000000.0;
-    float time_interval = time_new_s - time_old_s;
-    float speed = data_num * 8 / time_interval / 1000.0;
-    LOG_INFO("speed(%fs ~ %fs): %f kbit/s" , time_old_s, time_new_s, speed);
-    data_num = 0;
-    time_old.tv_sec = time_new.tv_sec;
-    time_old.tv_usec = time_new.tv_usec;
-}
+// static struct timeval time_new, time_old;
+// static long data_num = 0;
+
+// static void print_speed(void)
+// {
+//     float time_old_s = time_old.tv_sec + time_old.tv_usec / 1000000.0;
+//     float time_new_s = time_new.tv_sec + time_new.tv_usec / 1000000.0;
+//     float time_interval = time_new_s - time_old_s;
+//     float speed = data_num * 8 / time_interval / 1000.0;
+//     LOG_INFO("speed(%fs ~ %fs): %f kbit/s" , time_old_s, time_new_s, speed);
+//     data_num = 0;
+//     time_old.tv_sec = time_new.tv_sec;
+//     time_old.tv_usec = time_new.tv_usec;
+// }
 
 static void esp_spp_cb(esp_spp_cb_event_t event, esp_spp_cb_param_t *param)
 {

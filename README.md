@@ -7,7 +7,7 @@ Moving platform for Zakhar. Equipped by led indication and an MPU module (GY-91)
 
 Copyright (c) 2022 Andrei Gramakov. All rights reserved.
 
-This work is licensed under the terms of the GPLv3 license. For a copy, see: [LICENSE](LICENSE)
+This work is licensed under the terms of the MIT license. For a copy, see: [LICENSE](LICENSE)
 
 - site:    https://agramakov.me
 - e-mail:  mail@agramakov.me
