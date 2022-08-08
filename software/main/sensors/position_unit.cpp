@@ -30,7 +30,7 @@
 
 #include "config.h"
 #include "macros.h"
-#include "position_unit.h"
+#include "position_unit.hpp"
 #include "registers.hpp"
 
 #if ENABLE_POSITION_UNIT

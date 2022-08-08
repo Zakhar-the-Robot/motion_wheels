@@ -19,7 +19,7 @@
 #include "config.h"
 #include "controlcallback.h"
 #include "macros.h"
-#include "position_unit.h"
+#include "sensors/position_unit.hpp"
 #include "registers.hpp"
 
 LOG_SET_TAG("ctrl");

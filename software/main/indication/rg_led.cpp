@@ -20,7 +20,7 @@
 #include "config.h"
 #include "macros.h"
 
-#include "indication.hpp"
+#include "rg_led.hpp"
 
 LOG_SET_TAG("led");
 

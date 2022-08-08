@@ -26,7 +26,7 @@
 #define ENABLE_POSITION_UNIT 1
 #define ENABLE_CAN 1
 
-#define BT_DEVICE_NAME "Zakhar the robot"
+#define BT_DEVICE_NAME "Zakhar: Wheels"
 #define BT_SPP_SERVER_NAME "SPP_SERVER"
 #define BT_SPP_SHOW_DATA 0
 #define BT_SPP_SHOW_SPEED 1

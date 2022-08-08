@@ -14,8 +14,8 @@
 #include "freertos/task.h"
 
 #include "config.h"
-#include "delay.h"
-#include "millis.h"
+#include "port/delay.h"
+#include "port/millis.h"
 #include "motor_controller.hpp"
 #include "motors_on_esp32.hpp"
 

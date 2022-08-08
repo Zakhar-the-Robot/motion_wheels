@@ -23,27 +23,19 @@
 #include "soc/mcpwm_periph.h"
 
 // Communication
-#include "bluetooth_serial.hpp"
-#include "can.hpp"
+#include "communication/bluetooth_serial.hpp"
+#include "communication/can.hpp"
 #include "config.h"
 #include "controlcallback.h"
-#include "indication.hpp"
+#include "indication/rg_led.hpp"
 #include "macros.h"
-#include "motor_controller.hpp"
-#include "position_unit.h"
+#include "motion/motor_controller.hpp"
+#include "sensors/position_unit.hpp"
 #include "registers.hpp"
-#include "serial.hpp"
+#include "communication/serial.hpp"
+#include "main.hpp"
 
 LOG_SET_TAG("main");
-
-#define CHECK_LOAD_STAGE(func, unit_name)                \
-    do {                                                 \
-        esp_err_t res = (func);                          \
-        if (res != ESP_OK) {                             \
-            successfull_boot = false;                    \
-            LOG_ERROR("Can't initialize %s", unit_name); \
-        }                                                \
-    } while (0)
 
 inline void logging_loop()
 {
@@ -79,11 +71,6 @@ extern "C" void app_main()
     CHECK_LOAD_STAGE(start_mpu(), "MPU");
 #endif // ENABLE_POSITION_UNIT
 
-#if ENABLE_I2C
-    CHECK_LOAD_STAGE(start_i2c_slave(), "I2C");
-#endif // ENABLE_I2C
-
-
     CHECK_LOAD_STAGE(start_motors(), "Motors");
     CHECK_LOAD_STAGE(start_serial(), "Serial control");
     CHECK_LOAD_STAGE(start_control(), "Control system");
@@ -91,7 +78,6 @@ extern "C" void app_main()
 #if ENABLE_BLUETOOTH_SERIAL
     CHECK_LOAD_STAGE(start_bt_serial(), "Bluetooth");
 #endif // ENABLE_BLUETOOTH_SERIAL
-
 
 #if ENABLE_CAN
     CHECK_LOAD_STAGE(start_can(), "CAN");

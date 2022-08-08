@@ -20,8 +20,8 @@
 #include "config.h"
 #include "macros.h"
 #include "millis.h"
-#include "motor_controller.hpp"
-#include "position_unit.h"
+#include "motion/motor_controller.hpp"
+#include "sensors/position_unit.hpp"
 #include "registers.hpp"
 
 LOG_SET_TAG("cmd");
