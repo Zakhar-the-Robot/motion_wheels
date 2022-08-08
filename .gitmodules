@@ -1,18 +1,21 @@
-[submodule "software/components/esp32-MPU-driver"]
-	path = software/components/esp32-MPU-driver
-	url = https://github.com/natanaeljr/esp32-MPU-driver.git
-[submodule "software/components/I2Cbus"]
-	path = software/components/I2Cbus
-	url = https://github.com/natanaeljr/esp32-I2Cbus.git
-[submodule "software/components/ControlCallbacks"]
-	path = software/components/ControlCallbacks
-	url = git@github.com:an-dr/ControlCallbacks.git
-[submodule "software/components/SharedVirtualRegisters"]
-	path = software/components/SharedVirtualRegisters
-	url = git@github.com:an-dr/SharedVirtualRegisters.git
 [submodule "schematic/platform/zakhar_kicadlib"]
 	path = schematic/platform/zakhar_kicadlib
 	url = git@github.com:an-dr/zakhar_kicadlib.git
-[submodule "software/test/stubs/log.cx"]
-	path = software/test/stubs/log.cx
+[submodule "firmware/components/ControlCallbacks"]
+	path = firmware/components/ControlCallbacks
+	url = https://github.com/an-dr/ControlCallbacks.git
+[submodule "firmware/components/esp32-MPU-driver"]
+	path = firmware/components/esp32-MPU-driver
+	url = https://github.com/natanaeljr/esp32-MPU-driver.git
+[submodule "firmware/components/I2Cbus"]
+	path = firmware/components/I2Cbus
+	url = https://github.com/natanaeljr/esp32-I2Cbus.git
+[submodule "firmware/components/lib_espidf_canbus"]
+	path = firmware/components/lib_espidf_canbus
+	url = https://github.com/Zakhar-the-Robot/lib_espidf_canbus.git
+[submodule "firmware/components/SharedVirtualRegisters"]
+	path = firmware/components/SharedVirtualRegisters
+	url = https://github.com/an-dr/SharedVirtualRegisters.git
+[submodule "firmware/test/stubs/log.cx"]
+	path = firmware/test/stubs/log.cx
 	url = https://github.com/an-dr/log.cx.git
