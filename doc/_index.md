@@ -5,7 +5,7 @@ title: "Motion: Wheeled Platform"
 
 [![view - Documentation](https://img.shields.io/badge/Source%20Code-GitHub-blue)](https://github.com/Zakhar-the-Robot/motion_wheels "Go to Repository")
 
-Moving platform for Zakhar.
+Zakhar moving platform equipped with an LED indication and an MPU module (GY-91).
 
 The unit consists of:
 
@@ -13,6 +13,10 @@ The unit consists of:
 - **GY-91** - MPU module
 - **HW-021 TJA1050** - CAN-bus driver
 - Red-Green LED module
+
+## Schematic
+
+<img src="motion_wheels.svg" alt="schematic" width="800">
 
 ## Communication
 
@@ -68,7 +72,3 @@ Commands can be sent through the Serial interface using keyboard keys
 |MPU_CALIBRATE  |**c**           |
 |SET_ARG_TO_30  |**#**           |
 |TEST           |**t**           |
-
-## Schematic
-
-<img src="motion_wheels.svg" alt="schematic" width="800">
