@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "zk_connectors")(type "KiCad")(uri "${KIPRJMOD}/../lib_kicad/symbols/zk_connectors.kicad_sym")(options "")(descr ""))
+  (lib (name "zk_modules")(type "KiCad")(uri "${KIPRJMOD}/../lib_kicad/symbols/zk_modules.kicad_sym")(options "")(descr ""))
+)

@@ -65,9 +65,6 @@
 
 /* Pinout
    ********************************************************************* */
-#define PIN_I2C_S_SDA GPIO_NUM_18
-#define PIN_I2C_S_SCL GPIO_NUM_33
-
 #define PIN_MPU_I2C_SDA GPIO_NUM_5
 #define PIN_MPU_I2C_SCL GPIO_NUM_18
 

@@ -1,6 +1,3 @@
-[submodule "schematic/platform/zakhar_kicadlib"]
-	path = schematic/platform/zakhar_kicadlib
-	url = git@github.com:an-dr/zakhar_kicadlib.git
 [submodule "firmware/components/ControlCallbacks"]
 	path = firmware/components/ControlCallbacks
 	url = https://github.com/an-dr/ControlCallbacks.git
@@ -19,3 +16,6 @@
 [submodule "firmware/test/stubs/log.cx"]
 	path = firmware/test/stubs/log.cx
 	url = https://github.com/an-dr/log.cx.git
+[submodule "schematic/lib_kicad"]
+	path = schematic/lib_kicad
+	url = https://github.com/Zakhar-the-Robot/lib_kicad.git

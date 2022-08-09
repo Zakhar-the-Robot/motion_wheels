@@ -29,7 +29,7 @@
 #define CMD_SPEED3 0x33  // char '3'
 
 #define CMD_MPU_CALIBRATE 0x63  // char 'c'
-#define CMD_SET_ARG_TO_30 35    // char '#'
+#define CMD_SET_ARG_TO_30 0x23  // char '#'
 #define CMD_TEST 0x74           // char 't'
 
 void S1(void);
