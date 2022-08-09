@@ -1,4 +1,0 @@
-(sym_lib_table
-  (lib (name zk_connectors)(type Legacy)(uri ${KIPRJMOD}/zakhar_kicadlib/symbols/zk_connectors.lib)(options "")(descr ""))
-  (lib (name zk_modules)(type Legacy)(uri ${KIPRJMOD}/zakhar_kicadlib/symbols/zk_modules.lib)(options "")(descr ""))
-)
