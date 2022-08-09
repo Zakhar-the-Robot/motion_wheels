@@ -4,12 +4,16 @@
 # CPL data generated from PCB
 *.pos
 
+# KiCAD local settings
+*.kicad_prl
+
 # KiCAD backup
 *.bak
 *.bck
 *.kicad_pcb-bak
 *.sch-bak
 _saved_*
+schematic/**/*backups
 
 # Netlists
 *.net
